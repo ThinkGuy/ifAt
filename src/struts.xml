@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
-	<package name="ifAt" extends="struts-default" namespace="/ifAt">
+	<package name="admin" extends="struts-default" namespace="/Admin">
 		<action name="*_*" class="com.ifat.action.{1}Action" method="{2}">
 			<!-- 管理员操作 -->
-			<result>/Manager/cdloss/cdloss.jsp</result>
+			<result>/index.jsp</result>
 		</action>
 	</package>
 </struts>    

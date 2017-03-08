@@ -26,8 +26,9 @@ public class AdminService {
 		this.adminDAO = adminDAO;
 	}
 	
-	public boolean isLoginSuccess(Admin admin) {
-		return true;
+	public String dealWithLogin(Admin admin) {
+		
+		return "";
 	}
 	
 }
