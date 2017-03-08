@@ -59,11 +59,18 @@
 		scope="prototype">
 		<property name="adminDAO" ref="AdminDAO"></property>
 	</bean>
-	
+	<bean id="studentService" class="com.ifat.service.StudentService"
+		scope="prototype">
+		<property name="studentDAO" ref="StudentDAO"></property>
+	</bean>
 	<!-- Action -->
 	
 	<bean id="adminBaseOperationAction" class="com.ifat.action.AdminBaseOperationAction"
 		scope="prototype">
 		<property name="adminService" ref="adminService"></property>
+	</bean>
+	<bean id="studentBaseOperationAction" class="com.ifat.action.StudentBaseOperationAction"
+		scope="prototype">
+		<property name="studentService" ref="studentService"></property>
 	</bean>
 </beans>

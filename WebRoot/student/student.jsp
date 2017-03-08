@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="/bootstrap.jsp"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -22,32 +23,19 @@
         <!-- /.container-fluid -->
     </nav>
 <header>
-	<div class="container">
-		<div class="row clearfix">
-			<div class="col-md-4 col-md-offset-4 column">
-				<form class="form-signin" role="form"
-					action="<%=basePath%>Admin/AdminBaseOperation_login.action"
-					method="post">
-					<h3 class="form-signin-heading">管理员登录</h3>
-					<hr class="star-primary">
-					<input class="form-control" placeholder="账号名" required=""
-						autofocus="" type="text" name="name"> <br><input
-						class="form-control" placeholder="密码" required="" type="password"
-						name="password">
-					<div class="pull-left checkbox">
-						<label> <input value="remember-me" type="checkbox">
-							记住我
-						</label>
-					</div>
-					<div class="row clearfix">
-						<div class="pull-right col-md-12">${request.info}</div>
-					</div>
-					<button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
-				</form>
-			</div>
-		</div>
-	</div>
-	</header>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <img class="img-responsive" src="<%=basePath%>img/profile.png" alt="">
+                    <div class="intro-text">
+                        <span class="name">学生登录成功</span>
+                        <hr class="star-light">
+                        <span class="skills">欢迎使用</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 	 <!-- Footer -->
     <footer class="text-center">
         <div class="footer-above">

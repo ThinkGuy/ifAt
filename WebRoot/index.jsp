@@ -27,17 +27,17 @@
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
+					<li class="page-scroll">
+                        <a href="<%=basePath%>admin/adminBaseOperation/login.jsp">管理员登录</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="<%=basePath%>student/studentBaseOperation/login.jsp">学生登录</a>
+                    </li>
                     <li class="page-scroll">
                         <a href="#contact">联系我</a>
                     </li>
                     <li class="page-scroll">
                         <a href="#about">关于我</a>
-                    </li>
-					<li class="page-scroll">
-                        <a href="<%=basePath%>admin/adminBaseOperation/login.jsp">登录</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#">注册</a>
                     </li>
                 </ul>
             </div>

@@ -3,7 +3,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>管理员登录</title>
+<title>学生登录</title>
 <link href="<%=basePath%>resource/css/signin.css" rel="stylesheet">
 </head>
 
@@ -26,9 +26,9 @@
 		<div class="row clearfix">
 			<div class="col-md-4 col-md-offset-4 column">
 				<form class="form-signin" role="form"
-					action="<%=basePath%>Admin/AdminBaseOperation_login.action"
+					action="<%=basePath%>Student/StudentBaseOperation_login.action"
 					method="post">
-					<h3 class="form-signin-heading">管理员登录</h3>
+					<h3 class="form-signin-heading">学生登录</h3>
 					<hr class="star-primary">
 					<input class="form-control" placeholder="账号名" required=""
 						autofocus="" type="text" name="name"> <br><input

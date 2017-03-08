@@ -4,8 +4,16 @@
 	<package name="admin" extends="struts-default" namespace="/Admin">
 		<action name="*_*" class="com.ifat.action.{1}Action" method="{2}">
 			<!-- 管理员操作 -->
-			<result name="adminLoginSuccess">/index.jsp</result>
+			<result name="adminLoginSuccess">/admin/admin.jsp</result>
 			<result name="adminLoginFailed">/admin/adminBaseOperation/login.jsp</result>
+		</action>
+	</package>
+	
+	<package name="sutdent" extends="struts-default" namespace="/Student">
+		<action name="*_*" class="com.ifat.action.{1}Action" method="{2}">
+			<!-- 管理员操作 -->
+			<result name="studentLoginSuccess">/student/student.jsp</result>
+			<result name="studentLoginFailed">/student/studentBaseOperation/login.jsp</result>
 		</action>
 	</package>
 </struts>    
