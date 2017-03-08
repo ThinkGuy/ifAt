@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans
-	xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:p="http://www.springframework.org/schema/p"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd" xmlns:tx="http://www.springframework.org/schema/tx">
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
+	xmlns:tx="http://www.springframework.org/schema/tx">
 
 
-	<bean id="dataSource"
-		class="org.apache.commons.dbcp.BasicDataSource">
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="url" value="jdbc:mysql://localhost:3306/ifat"></property>
 		<property name="username" value="root"></property>
 		<property name="password" value="root"></property>
@@ -24,9 +22,47 @@
 				</prop>
 			</props>
 		</property>
+		<property name="mappingResources">
+			<list>
+				<value>com/ifat/dao/Student.hbm.xml</value>
+				<value>com/ifat/dao/Class.hbm.xml</value>
+				<value>com/ifat/dao/Admin.hbm.xml</value>
+			</list>
+		</property>
 	</bean>
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-	<tx:annotation-driven transaction-manager="transactionManager" /></beans>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- DAO -->
+	<bean id="StudentDAO" class="com.ifat.dao.StudentDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="ClassDAO" class="com.ifat.dao.ClassDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="AdminDAO" class="com.ifat.dao.AdminDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<!-- Service -->
+	<bean id="adminService" class="com.ifat.service.AdminService"
+		scope="prototype">
+		<property name="adminDAO" ref="AdminDAO"></property>
+	</bean>
+	
+	<!-- Action -->
+	
+	<bean id="adminBaseOperationAction" class="com.ifat.action.AdminBaseOperationAction"
+		scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+</beans>
