@@ -6,6 +6,7 @@
 
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
 		<property name="url" value="jdbc:mysql://localhost:3306/ifat"></property>
 		<property name="username" value="root"></property>
 		<property name="password" value="root"></property>

@@ -4,7 +4,8 @@
 	<package name="admin" extends="struts-default" namespace="/Admin">
 		<action name="*_*" class="com.ifat.action.{1}Action" method="{2}">
 			<!-- 管理员操作 -->
-			<result>/index.jsp</result>
+			<result name="adminLoginSuccess">/index.jsp</result>
+			<result name="adminLoginFailed">/admin/adminBaseOperation/login.jsp</result>
 		</action>
 	</package>
 </struts>    

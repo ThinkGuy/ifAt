@@ -1,7 +1,5 @@
 package com.ifat.action;
 
-import javax.security.auth.login.LoginContext;
-
 import com.ifat.model.Admin;
 import com.ifat.service.AdminService;
 import com.opensymphony.xwork2.ModelDriven;
@@ -26,7 +24,12 @@ public class AdminBaseOperationAction extends SuperAction implements
 	 * @return
 	 */
 	public String login() {
-		return adminService.dealWithLogin(admin);
+		if ("adminLoginSuccess".equals(adminService.dealWithLogin(admin))) {
+			return "adminLoginSuccess";
+		}
+		
+		request.setAttribute("info", adminService.dealWithLogin(admin));
+		return "adminLoginFailed";
 	}
 
 	@Override
@@ -35,7 +38,7 @@ public class AdminBaseOperationAction extends SuperAction implements
 		if (admin == null) {
 			admin = new Admin();
 		}
-		return null;
+		return admin;
 	}
 
 }

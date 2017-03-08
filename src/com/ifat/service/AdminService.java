@@ -26,9 +26,19 @@ public class AdminService {
 		this.adminDAO = adminDAO;
 	}
 	
+	/**
+	 * 管理员登录处理。
+	 * @param admin
+	 * @return
+	 */
 	public String dealWithLogin(Admin admin) {
+		if (adminDAO.findByName(admin.getName()).size() == 0) {
+			return "用户名不存在,请重新登录";
+		} else if (adminDAO.findByPassword(admin.getPassword()).size() == 0) {
+			return "密码错误,请重新登录";
+		}
 		
-		return "";
+		return "adminLoginSuccess";
 	}
 	
 }
