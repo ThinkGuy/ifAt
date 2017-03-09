@@ -28,10 +28,10 @@
                         <a href="#page-top"></a>
                     </li>
 					<li class="page-scroll">
-                        <a href="<%=basePath%>admin/adminBaseOperation/login.jsp">管理员登录</a>
+                        <a href="<%=basePath%>admin/basicOperation/login.jsp">管理员登录</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="<%=basePath%>student/studentBaseOperation/login.jsp">学生登录</a>
+                        <a href="<%=basePath%>student/basicOperation/login.jsp">学生登录</a>
                     </li>
                     <li class="page-scroll">
                         <a href="#contact">联系我</a>

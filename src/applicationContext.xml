@@ -65,11 +65,11 @@
 	</bean>
 	<!-- Action -->
 	
-	<bean id="adminBaseOperationAction" class="com.ifat.action.AdminBaseOperationAction"
+	<bean id="adminBasicOperationAction" class="com.ifat.action.AdminBasicOperationAction"
 		scope="prototype">
 		<property name="adminService" ref="adminService"></property>
 	</bean>
-	<bean id="studentBaseOperationAction" class="com.ifat.action.StudentBaseOperationAction"
+	<bean id="studentBasicOperationAction" class="com.ifat.action.StudentBasicOperationAction"
 		scope="prototype">
 		<property name="studentService" ref="studentService"></property>
 	</bean>

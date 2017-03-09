@@ -26,7 +26,7 @@
 		<div class="row clearfix">
 			<div class="col-md-4 col-md-offset-4 column">
 				<form class="form-signin" role="form"
-					action="<%=basePath%>Admin/AdminBaseOperation_login.action"
+					action="<%=basePath%>Admin/AdminBasicOperation_login.action"
 					method="post">
 					<h3 class="form-signin-heading">管理员登录</h3>
 					<hr class="star-primary">

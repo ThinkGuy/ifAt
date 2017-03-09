@@ -5,7 +5,7 @@
 		<action name="*_*" class="com.ifat.action.{1}Action" method="{2}">
 			<!-- 管理员操作 -->
 			<result name="adminLoginSuccess">/admin/admin.jsp</result>
-			<result name="adminLoginFailed">/admin/adminBaseOperation/login.jsp</result>
+			<result name="adminLoginFailed">/admin/basicOperation/login.jsp</result>
 		</action>
 	</package>
 	
@@ -13,7 +13,7 @@
 		<action name="*_*" class="com.ifat.action.{1}Action" method="{2}">
 			<!-- 管理员操作 -->
 			<result name="studentLoginSuccess">/student/student.jsp</result>
-			<result name="studentLoginFailed">/student/studentBaseOperation/login.jsp</result>
+			<result name="studentLoginFailed">/student/basicOperation/login.jsp</result>
 		</action>
 	</package>
 </struts>    

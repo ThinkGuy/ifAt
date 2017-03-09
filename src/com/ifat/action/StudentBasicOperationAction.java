@@ -4,7 +4,7 @@ import com.ifat.model.Student;
 import com.ifat.service.StudentService;
 import com.opensymphony.xwork2.ModelDriven;
 
-public class StudentBaseOperationAction extends SuperAction implements
+public class StudentBasicOperationAction extends SuperAction implements
 		ModelDriven<Student> {
 
 	private static final long serialVersionUID = 1L;

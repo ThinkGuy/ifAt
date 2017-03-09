@@ -4,7 +4,7 @@ import com.ifat.model.Admin;
 import com.ifat.service.AdminService;
 import com.opensymphony.xwork2.ModelDriven;
 
-public class AdminBaseOperationAction extends SuperAction implements
+public class AdminBasicOperationAction extends SuperAction implements
 		ModelDriven<Admin> {
 
 	private static final long serialVersionUID = 1L;
