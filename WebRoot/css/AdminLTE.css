@@ -2565,7 +2565,7 @@ Component: timeline
 */
 /* skin-black navbar */
 .skin-black .navbar {
-  background-color: #ffffff;
+  background-color: rgb(24, 188, 156);
   border-bottom: 1px solid #eee;
 }
 .skin-black .navbar .nav a {
