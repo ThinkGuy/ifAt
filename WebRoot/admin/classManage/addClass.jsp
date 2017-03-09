@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<%@ include file="adminHead.jsp"%>
+<%@ include file="../admin.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -132,7 +132,7 @@
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="<%=basePath%>admin/classManage/classManage.jsp"><i class="fa fa-angle-double-right"></i> 班级管理中心</a></li>
+                            	<li><a href="<%=basePath%>admin/classManage/classManage.jsp"><i class="fa fa-angle-double-right"></i> 班级管理中心</a></li>
                                 <li><a href="<%=basePath%>admin/classManage/addClass.jsp"><i class="fa fa-angle-double-right"></i> 添加班级</a></li>
                             </ul>
                         </li>
@@ -162,18 +162,19 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                       	 空白页
+                       	 添加班级
                         <small>控制面板</small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> 管理员主页</a></li>
-                        <li class="active">空白页</li>
+                        <li><a href="#"><i class="fa fa-dashboard"></i> 班级管理中心</a></li>
+                        <li class="active">添加班级</li>
                     </ol>
                 </section>
 
                 <!-- Main content -->
                 <section class="content">
-
+					
+					
 
                 </section><!-- /.content -->
             </aside><!-- /.right-side -->
