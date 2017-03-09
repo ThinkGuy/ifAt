@@ -57,8 +57,8 @@ public class AdminService {
 			return "两次输入密码不一致，请重新输入";
 		}
 		
+		admin = adminDAO.findById(admin.getId());
 		admin.setPassword(chPassword);
-		admin.setName(adminDAO.findById(admin.getId()).getName());
 		adminDAO.merge(admin);
 		return "changePasswordSuccess";
 	}

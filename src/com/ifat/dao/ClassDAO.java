@@ -71,7 +71,7 @@ public class ClassDAO {
 		log.debug("getting Class instance with id: " + id);
 		try {
 			Class instance = (Class) getCurrentSession().get(
-					"com.ifat.dao.Class", id);
+					"com.ifat.model.Class", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -83,7 +83,7 @@ public class ClassDAO {
 		log.debug("finding Class instance by example");
 		try {
 			List results = getCurrentSession()
-					.createCriteria("com.ifat.dao.Class")
+					.createCriteria("com.ifat.model.Class")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

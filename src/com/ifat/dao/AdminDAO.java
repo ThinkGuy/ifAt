@@ -72,7 +72,7 @@ public class AdminDAO {
 		log.debug("getting Admin instance with id: " + id);
 		try {
 			Admin instance = (Admin) getCurrentSession().get(
-					"com.ifat.dao.Admin", id);
+					"com.ifat.model.Admin", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -84,7 +84,7 @@ public class AdminDAO {
 		log.debug("finding Admin instance by example");
 		try {
 			List results = getCurrentSession()
-					.createCriteria("com.ifat.dao.Admin")
+					.createCriteria("com.ifat.model.Admin")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

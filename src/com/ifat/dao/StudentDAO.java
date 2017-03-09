@@ -73,7 +73,7 @@ public class StudentDAO {
 		log.debug("getting Student instance with id: " + id);
 		try {
 			Student instance = (Student) getCurrentSession().get(
-					"com.ifat.dao.Student", id);
+					"com.ifat.model.Student", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -85,7 +85,7 @@ public class StudentDAO {
 		log.debug("finding Student instance by example");
 		try {
 			List results = getCurrentSession()
-					.createCriteria("com.ifat.dao.Student")
+					.createCriteria("com.ifat.model.Student")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());
