@@ -18,18 +18,61 @@ public class AdminBasicOperationAction extends SuperAction implements
 	public void setAdminService(AdminService adminService) {
 		this.adminService = adminService;
 	}
-	
+
 	/**
 	 * 管理员登录处理。
+	 * 
 	 * @return
 	 */
 	public String login() {
-		if ("adminLoginSuccess".equals(adminService.dealWithLogin(admin))) {
-			return "adminLoginSuccess";
+		if ("loginSuccess".equals(adminService.dealWithLogin(admin))) {
+			admin = (Admin)adminService.getAdminDAO().findByName(admin.getName()).get(0);
+			session.setAttribute("adminId", admin.getId());
+			session.setAttribute("adminName", admin.getName());
+			
+			return "loginSuccess";
+		}
+
+		request.setAttribute("info", adminService.dealWithLogin(admin));
+		return "loginFailed";
+	}
+
+	/**
+	 * 修改管理员密码。
+	 * @return
+	 */
+	public String changePassword() {
+		if (session.getAttribute("adminId") == null) {
+			return "LoginNotYet";
+		}
+
+		admin.setId(session.getAttribute("adminId").toString());
+
+		String chPassword = request.getParameter("chPassword");
+		String confirmPassword = request.getParameter("confirmPassword");
+
+		if ("changePasswordSuccess".equals(adminService.dealWithChangePassword(
+				admin, chPassword, confirmPassword))) {
+			return "changePasswordSuccess";
+		}
+
+		request.setAttribute("info", adminService.dealWithChangePassword(admin,
+				chPassword, confirmPassword));
+		
+		return "changePasswordFailed";
+	}
+	
+	/**
+	 * 管理员注销。
+	 * @return
+	 */
+	public String logout() {
+		if (session.getAttribute("adminId") != null) {
+			session.setAttribute("adminId", null);
+			session.setAttribute("adminName", null);
 		}
 		
-		request.setAttribute("info", adminService.dealWithLogin(admin));
-		return "adminLoginFailed";
+		return "logout";
 	}
 
 	@Override

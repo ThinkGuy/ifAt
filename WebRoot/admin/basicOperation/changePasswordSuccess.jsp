@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<%@ include file="adminHead.jsp"%>
+<%@ include file="../adminHead.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -164,12 +164,13 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                       	 空白页
+                       	 修改管理员密码成功
                         <small>控制面板</small>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> 管理员主页</a></li>
-                        <li class="active">空白页</li>
+                        <li>修改密码</li>
+                        <li class="active">修改密码成功</li>
                     </ol>
                 </section>
 

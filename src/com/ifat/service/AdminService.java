@@ -5,6 +5,7 @@ import com.ifat.model.Admin;
 
 /**
  * AdminService.
+ * 
  * @author lxw
  *
  */
@@ -20,14 +21,16 @@ public class AdminService {
 	}
 
 	/**
-	 * @param adminDAO the adminDAO to set
+	 * @param adminDAO
+	 *            the adminDAO to set
 	 */
 	public void setAdminDAO(AdminDAO adminDAO) {
 		this.adminDAO = adminDAO;
 	}
-	
+
 	/**
 	 * 管理员登录处理。
+	 * 
 	 * @param admin
 	 * @return
 	 */
@@ -37,8 +40,27 @@ public class AdminService {
 		} else if (adminDAO.findByPassword(admin.getPassword()).size() == 0) {
 			return "密码错误,请重新登录";
 		}
-		
-		return "adminLoginSuccess";
+
+		return "loginSuccess";
 	}
-	
+
+	/**
+	 * 管理员密码修改。
+	 * @param admin
+	 * @param chPassword
+	 * @param confirmPassword
+	 * @return
+	 */
+	public String dealWithChangePassword(Admin admin, String chPassword,
+			String confirmPassword) {
+		if (!chPassword.equals(confirmPassword)) {
+			return "两次输入密码不一致，请重新输入";
+		}
+		
+		admin.setPassword(chPassword);
+		admin.setName(adminDAO.findById(admin.getId()).getName());
+		adminDAO.merge(admin);
+		return "changePasswordSuccess";
+	}
+
 }
