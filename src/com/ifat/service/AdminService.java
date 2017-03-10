@@ -1,7 +1,12 @@
 package com.ifat.service;
 
+import java.util.UUID;
 import com.ifat.dao.AdminDAO;
+import com.ifat.dao.ClassDAO;
+import com.ifat.dao.StudentDAO;
 import com.ifat.model.Admin;
+import com.ifat.model.Class;
+import com.ifat.model.Student;
 
 /**
  * AdminService.
@@ -10,9 +15,11 @@ import com.ifat.model.Admin;
  *
  */
 public class AdminService {
-
+	
 	private AdminDAO adminDAO;
-
+	private ClassDAO classDAO;
+	private StudentDAO studentDAO;
+	
 	/**
 	 * @return the adminDAO
 	 */
@@ -26,6 +33,34 @@ public class AdminService {
 	 */
 	public void setAdminDAO(AdminDAO adminDAO) {
 		this.adminDAO = adminDAO;
+	}
+
+	/**
+	 * @return the classDAO
+	 */
+	public ClassDAO getClassDAO() {
+		return classDAO;
+	}
+
+	/**
+	 * @param classDAO the classDAO to set
+	 */
+	public void setClassDAO(ClassDAO classDAO) {
+		this.classDAO = classDAO;
+	}
+
+	/**
+	 * @return the studentDAO
+	 */
+	public StudentDAO getStudentDAO() {
+		return studentDAO;
+	}
+
+	/**
+	 * @param studentDAO the studentDAO to set
+	 */
+	public void setStudentDAO(StudentDAO studentDAO) {
+		this.studentDAO = studentDAO;
 	}
 
 	/**
@@ -61,6 +96,36 @@ public class AdminService {
 		admin.setPassword(chPassword);
 		adminDAO.merge(admin);
 		return "changePasswordSuccess";
+	}
+	
+	/**
+	 * 添加班级。
+	 * @param c
+	 * @return
+	 */
+	public String dealWithAddClass(Class c) {
+		if (classDAO.findByName(c.getName()).size() !=0) {
+			return "该班级已经存在，请重新添加班级";
+		}
+		
+		c.setId(UUID.randomUUID().toString());
+		classDAO.merge(c);
+		
+		//自动添加学生账号。
+		Student student;
+		int i = 0;
+		while (i < 15) {
+			student = new Student();
+			student.setId(UUID.randomUUID().toString());
+			student.setCid(c.getId());
+			student.setName(c.getName() + 0 + i);
+			student.setPassword(new PassWordCreate().createPassWord(9));
+			studentDAO.merge(student);
+			i++;
+		}
+		
+		return "addClassSuccess";
+		
 	}
 
 }

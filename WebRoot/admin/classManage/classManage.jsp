@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<%@ include file="../admin.jsp"%>
+<%@ include file="../adminHead.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>

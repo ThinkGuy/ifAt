@@ -10,6 +10,10 @@
 			<result name="logout">/index.jsp</result>
 			<result name="changePasswordSuccess">/admin/basicOperation/changePasswordSuccess.jsp</result>
 			<result name="changePasswordFailed">/admin/basicOperation/changePassword.jsp</result>
+			<result name="addClassSuccess">/admin/classManage/addClassSuccess.jsp</result>
+			<result name="addClassFailed">/admin/classManage/addClass.jsp</result>
+			
+			
 		</action>
 	</package>
 	

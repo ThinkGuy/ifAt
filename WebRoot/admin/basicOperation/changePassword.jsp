@@ -170,30 +170,32 @@
 
 			<!-- Main content -->
 			<section class="content">
-			
-			<div class="row clearfix">
-			<div class="col-md-4 col-md-offset-4 column">
-				<form
-					action="<%=basePath%>/Admin/AdminBasicOperation_changePassword.action"
-					id="form" method="post">
-					<center><h3>管理员密码修改 </h3></center>
-					<hr class="star-primary">
-					<div class="form-group">
-						<label for="Password">新密码:</label> <input class="form-control"
-							id="chPassword" type="password" name="chPassword" />
+
+				<div class="row clearfix">
+					<div class="col-md-4 col-md-offset-4 column">
+						<form
+							action="<%=basePath%>/Admin/AdminBasicOperation_changePassword.action"
+							id="form" method="post">
+							<center>
+								<h3>管理员密码修改</h3>
+							</center>
+							<hr class="star-primary">
+							<div class="form-group">
+								<label for="Password">新密码:</label> <input class="form-control"
+									id="chPassword" type="password" name="chPassword" />
+							</div>
+							<div class="form-group">
+								<label for="Password">确认密码:</label> <input class="form-control"
+									id="chPassword" type="password" name="confirmPassword" />
+							</div>
+							<div class="row clearfix">
+								<div class="col-md-12 column">${request.info}</div>
+								</br>
+							</div>
+							<button class="btn btn-lg btn-primary btn-block" type="submit">提交</button>
+						</form>
 					</div>
-					<div class="form-group">
-						<label for="Password">确认密码:</label> <input class="form-control"
-							id="chPassword" type="password" name="confirmPassword" />
-					</div>
-					<div class="row clearfix">
-						<div class="col-md-12 column">${request.info}</div>
-						</br>
-					</div>
-					<button class="btn btn-lg btn-primary btn-block" type="submit">提交</button>
-				</form>
-			</div>
-		</div>
+				</div>
 
 			</section>
 			<!-- /.content -->
