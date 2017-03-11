@@ -92,6 +92,9 @@ public class AdminBasicOperationAction extends SuperAction implements
 		c.setName(request.getParameter("className"));
 
 		if ("addClassSuccess".equals(adminService.dealWithAddClass(c))) {
+			c = (Class)adminService.getClassDAO().findByName(c.getName()).get(0);
+			request.setAttribute("studentList", adminService.getStudentDAO().findByCid(c.getId()));
+			request.setAttribute("className", c.getName());
 			return "addClassSuccess";
 		}
 

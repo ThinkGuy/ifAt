@@ -170,7 +170,7 @@
 				<div class="row clearfix">
 					<div class="col-md-4 col-md-offset-4 column">
 						<form
-							action="<%=basePath%>/Admin/AdminBasicOperation_addClass.action"
+							action="<%=basePath%>Admin/AdminBasicOperation_addClass.action"
 							id="form" method="post">
 							<center>
 								<h3>添加班级</h3>
