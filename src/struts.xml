@@ -8,15 +8,17 @@
 			<result name="loginFailed">/admin/basicOperation/login.jsp</result>
 			<result name="LoginNotYet">/admin/basicOperation/login.jsp</result>
 			<result name="logout">/index.jsp</result>
-			<result name="changePasswordSuccess">/admin/basicOperation/changePasswordSuccess.jsp</result>
+			<result name="changePasswordSuccess">/admin/basicOperation/changePasswordSuccess.jsp
+			</result>
 			<result name="changePasswordFailed">/admin/basicOperation/changePassword.jsp</result>
 			<result name="addClassSuccess">/admin/classManage/addClassSuccess.jsp</result>
 			<result name="addClassFailed">/admin/classManage/addClass.jsp</result>
-			
-			
+			<result name="displayClasses">/admin/classManage/classManage.jsp</result>
+			<result name="deleteClassSuccess">/admin/classManage/classManage.jsp</result>
+			<result name="searchStudentsByClassSuccess">/admin/classManage/addClassSuccess.jsp</result>
 		</action>
 	</package>
-	
+
 	<package name="sutdent" extends="struts-default" namespace="/Student">
 		<action name="*_*" class="com.ifat.action.{1}Action" method="{2}">
 			<!-- 管理员操作 -->

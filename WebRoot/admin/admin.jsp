@@ -132,7 +132,7 @@
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="<%=basePath%>admin/classManage/classManage.jsp"><i class="fa fa-angle-double-right"></i> 班级管理中心</a></li>
+                                <li><a href="<%=basePath%>Admin/AdminBasicOperation_displayClasses.action"><i class="fa fa-angle-double-right"></i> 班级管理中心</a></li>
                                 <li><a href="<%=basePath%>admin/classManage/addClass.jsp"><i class="fa fa-angle-double-right"></i> 添加班级</a></li>
                             </ul>
                         </li>

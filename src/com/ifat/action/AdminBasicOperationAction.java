@@ -92,8 +92,10 @@ public class AdminBasicOperationAction extends SuperAction implements
 		c.setName(request.getParameter("className"));
 
 		if ("addClassSuccess".equals(adminService.dealWithAddClass(c))) {
-			c = (Class)adminService.getClassDAO().findByName(c.getName()).get(0);
-			request.setAttribute("studentList", adminService.getStudentDAO().findByCid(c.getId()));
+			c = (Class) adminService.getClassDAO().findByName(c.getName())
+					.get(0);
+			request.setAttribute("studentList", adminService.getStudentDAO()
+					.findByCid(c.getId()));
 			request.setAttribute("className", c.getName());
 			return "addClassSuccess";
 		}
@@ -101,6 +103,55 @@ public class AdminBasicOperationAction extends SuperAction implements
 		request.setAttribute("info", adminService.dealWithAddClass(c));
 		return "addClassFailed";
 
+	}
+
+	/**
+	 * 显示所有班级。
+	 * 
+	 * @return
+	 */
+	public String displayClasses() {
+		if (session.getAttribute("adminId") == null) {
+			return "LoginNotYet";
+		}
+
+		request.setAttribute("classList", adminService.getClassDAO().findAll());
+		return "displayClasses";
+	}
+
+	/**
+	 * 班级删除。
+	 * 
+	 * @return
+	 */
+	public String deleteClass() {
+		if (session.getAttribute("adminId") == null) {
+			return "LoginNotYet";
+		}
+
+		Class c = new Class();
+		c.setId(request.getParameter("cid"));
+		request.setAttribute("Info", adminService.dealWithDeleteClass(c));
+		return "deleteClassSuccess";
+	}
+
+	/**
+	 * 显示班级下所有学生。
+	 * 
+	 * @return
+	 */
+	public String searchStudentsByClass() {
+		if (session.getAttribute("adminId") == null) {
+			return "LoginNotYet";
+		}
+
+		request.setAttribute("studentList", adminService.getStudentDAO()
+				.findByCid(request.getParameter("cid")));
+		request.setAttribute(
+				"className",
+				adminService.getClassDAO().findById(
+						request.getParameter("cid")).getName());
+		return "searchStudentsByClassSuccess";
 	}
 
 	@Override

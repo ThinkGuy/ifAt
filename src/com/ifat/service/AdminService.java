@@ -125,7 +125,16 @@ public class AdminService {
 		}
 		
 		return "addClassSuccess";
-		
+	}
+	
+	/**
+	 * 删除班级。
+	 * @return
+	 */
+	public String dealWithDeleteClass(Class c) {
+		String className = classDAO.findById(c.getId()).getName();
+		classDAO.delete(c);
+		return className + "被删除成功。";
 	}
 
 }
