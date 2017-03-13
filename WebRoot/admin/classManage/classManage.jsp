@@ -3,13 +3,13 @@
 <%@ include file="../admin.jsp"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        </head>
-    <body class="skin-blue">
-        <!-- header logo: style can be found in header.less -->
-        
-        <div class="row-offcanvas row-offcanvas-left">
-           <!-- Right side column. Contains the navbar and content of the page -->
+<head>
+</head>
+<body class="skin-blue">
+	<!-- header logo: style can be found in header.less -->
+
+	<div class="row-offcanvas row-offcanvas-left">
+		<!-- Right side column. Contains the navbar and content of the page -->
 		<aside class="right-side">
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
@@ -28,7 +28,7 @@
 					<div class="col-xs-12">
 						<div class="box">
 							<div class="box-header">
-								<h3 class="box-title">${request.Info} </h3>
+								<h3 class="box-title">${request.Info}</h3>
 							</div>
 							<!-- /.box-header -->
 							<div class="box-body table-responsive">
@@ -43,11 +43,11 @@
 										<c:forEach items="${request.classList}" var="c">
 											<tr>
 												<td>${c.name}</td>
-												<td><a
-													href="<%=basePath%>Admin/AdminBasicOperation_deleteClass.action?cid=${c.id}">删除
-												</a> <a
-													href="<%=basePath%>Admin/AdminBasicOperation_searchStudentsByClass.action?cid=${c.id}">查看学生
-												</a></td>
+												<td><button class="btn btn-info btn-sm"
+														onclick="window.location.href='<%=basePath%>Admin/AdminBasicOperation_deleteClass.action?cid=${c.id}'">删除</button>
+													<button class="btn btn-info btn-sm"
+														onclick="window.location.href='<%=basePath%>Admin/AdminBasicOperation_searchStudentsByClass.action?cid=${c.id}'">查看学生</button>
+												</td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -70,5 +70,5 @@
 		<!-- /.right-side -->
 	</div>
 	<!-- ./wrapper -->
-    </body>
+</body>
 </html>

@@ -3,13 +3,13 @@
 <%@ include file="../admin.jsp"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        </head>
-    <body class="skin-blue">
-        <!-- header logo: style can be found in header.less -->
-        
-        <div class="row-offcanvas row-offcanvas-left">
-            <!-- Right side column. Contains the navbar and content of the page -->
+<head>
+</head>
+<body class="skin-blue">
+	<!-- header logo: style can be found in header.less -->
+
+	<div class="row-offcanvas row-offcanvas-left">
+		<!-- Right side column. Contains the navbar and content of the page -->
 		<aside class="right-side">
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
@@ -17,7 +17,8 @@
 					${request.Info} <small>控制面板</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li class="active"><a href="#"><i class="fa fa-dashboard"></i> 学生管理中心</a></li>
+					<li class="active"><a href="#"><i class="fa fa-dashboard"></i>
+							学生管理中心</a></li>
 				</ol>
 			</section>
 
@@ -46,9 +47,8 @@
 												<td>${student.name}</td>
 												<td>${student.password}</td>
 												<td>${request.className}</td>
-												<td><a
-													href="<%=basePath%>Admin/AdminBasicOperation_deleteStudent.action?sid=${student.id}">删除
-												</a></td>
+												<td><button class="btn btn-info btn-sm"
+														onclick="window.location.href='<%=basePath%>Admin/AdminBasicOperation_deleteStudent.action?sid=${student.id}'">删除</button></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -73,5 +73,5 @@
 		<!-- /.right-side -->
 	</div>
 	<!-- ./wrapper -->
-    </body>
+</body>
 </html>
