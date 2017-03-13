@@ -48,6 +48,16 @@
 	<!-- jQuery 2.0.2 -->
 	<script
 		src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+	<script src="<%=basePath%>js/plugins/datatables/jquery.dataTables.js"
+		type="text/javascript"></script>
+	<script
+		src="<%=basePath%>js/plugins/datatables/dataTables.bootstrap.js"
+		type="text/javascript"></script>
+	<script type="text/javascript">
+		$(function() {
+			$("#example1").dataTable();
+		});
+	</script>
 	<!-- jQuery UI 1.10.3 -->
 	<script src="<%=basePath%>js/jquery-ui-1.10.3.min.js"
 		type="text/javascript"></script>

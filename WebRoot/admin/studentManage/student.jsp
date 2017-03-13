@@ -13,19 +13,18 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                       	 修改管理员密码成功
+                       	 空白页
                         <small>控制面板</small>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> 管理员主页</a></li>
-                        <li>修改密码</li>
-                        <li class="active">修改密码成功</li>
+                        <li class="active">空白页</li>
                     </ol>
                 </section>
 
                 <!-- Main content -->
                 <section class="content">
-
+					222
 
                 </section><!-- /.content -->
             </aside><!-- /.right-side -->

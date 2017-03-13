@@ -2,6 +2,7 @@ package com.ifat.action;
 
 import com.ifat.model.Admin;
 import com.ifat.model.Class;
+import com.ifat.model.Student;
 import com.ifat.service.AdminService;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -97,6 +98,8 @@ public class AdminBasicOperationAction extends SuperAction implements
 			request.setAttribute("studentList", adminService.getStudentDAO()
 					.findByCid(c.getId()));
 			request.setAttribute("className", c.getName());
+			request.setAttribute("Info", "班级" + c.getName()
+					+ "添加成功，并同时为您自动生成了如下学生账号、密码");
 			return "addClassSuccess";
 		}
 
@@ -116,6 +119,7 @@ public class AdminBasicOperationAction extends SuperAction implements
 		}
 
 		request.setAttribute("classList", adminService.getClassDAO().findAll());
+		request.setAttribute("Info", "班级表如下:");
 		return "displayClasses";
 	}
 
@@ -129,9 +133,9 @@ public class AdminBasicOperationAction extends SuperAction implements
 			return "LoginNotYet";
 		}
 
-		Class c = new Class();
-		c.setId(request.getParameter("cid"));
-		request.setAttribute("Info", adminService.dealWithDeleteClass(c));
+		request.setAttribute("Info",
+				adminService.dealWithDeleteClass(request.getParameter("cid")));
+		request.setAttribute("classList", adminService.getClassDAO().findAll());
 		return "deleteClassSuccess";
 	}
 
@@ -147,11 +151,45 @@ public class AdminBasicOperationAction extends SuperAction implements
 
 		request.setAttribute("studentList", adminService.getStudentDAO()
 				.findByCid(request.getParameter("cid")));
-		request.setAttribute(
-				"className",
-				adminService.getClassDAO().findById(
-						request.getParameter("cid")).getName());
+		String classname = adminService.getClassDAO()
+				.findById(request.getParameter("cid")).getName();
+		request.setAttribute("className", classname);
+		request.setAttribute("Info", "班级" + classname
+				+ "的学生信息如下所示：");
 		return "searchStudentsByClassSuccess";
+	}
+
+	/**
+	 * 显示学生。
+	 * 
+	 * @return
+	 */
+	public String displayStudents() {
+		if (session.getAttribute("adminId") == null) {
+			return "LoginNotYet";
+		}
+
+		request.setAttribute("studentList", adminService.getStudentDAO()
+				.findAll());
+		request.setAttribute("Info", "学生表如下：");
+		return "displayStudentsSuccess";
+	}
+
+	/**
+	 * 删除学生。
+	 * 
+	 * @return
+	 */
+	public String deleteStudent() {
+		if (session.getAttribute("adminId") == null) {
+			return "LoginNotYet";
+		}
+
+		request.setAttribute("Info",
+				adminService.dealWithDeleteStudent(request.getParameter("sid")));
+		request.setAttribute("studentList", adminService.getStudentDAO()
+				.findAll());
+		return "deleteStudentSuccess";
 	}
 
 	@Override

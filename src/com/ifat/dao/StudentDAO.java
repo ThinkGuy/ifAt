@@ -6,6 +6,7 @@ import org.hibernate.LockOptions;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,6 +66,22 @@ public class StudentDAO {
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
+			throw re;
+		}
+	}
+
+	public void deleteByClassId(String cid) {
+		try {
+			Session session = sessionFactory.openSession();
+			Transaction tx = session.beginTransaction();
+			String hqlDelete = "delete from Student where cid = :cid";
+			int deletedEntities = session.createQuery(hqlDelete)
+			.setString("cid", cid)
+			.executeUpdate();
+			tx.commit();
+			session.close();
+		} catch (RuntimeException re) {
+			log.error("delete by property cid failed", re);
 			throw re;
 		}
 	}

@@ -131,10 +131,24 @@ public class AdminService {
 	 * 删除班级。
 	 * @return
 	 */
-	public String dealWithDeleteClass(Class c) {
-		String className = classDAO.findById(c.getId()).getName();
+	public String dealWithDeleteClass(String cid) {
+		Class c = classDAO.findById(cid);
 		classDAO.delete(c);
-		return className + "被删除成功。";
+		//删除班级下的所有学生。
+		studentDAO.deleteByClassId(cid);
+		return "班级：" + c.getName() + "已被删除";
 	}
+	
+	/**
+	 * 删除学生。
+	 * @param sid
+	 * @return
+	 */
+	public String dealWithDeleteStudent(String sid) {
+		Student student = studentDAO.findById(sid);
+		studentDAO.delete(student);
+		return "学生：" + student.getName() + "已被删除";
+	}
+	
 
 }

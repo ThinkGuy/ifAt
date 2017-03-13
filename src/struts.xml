@@ -16,6 +16,8 @@
 			<result name="displayClasses">/admin/classManage/classManage.jsp</result>
 			<result name="deleteClassSuccess">/admin/classManage/classManage.jsp</result>
 			<result name="searchStudentsByClassSuccess">/admin/classManage/addClassSuccess.jsp</result>
+			<result name="displayStudentsSuccess">/admin/studentManage/studentManage.jsp</result>
+			<result name="deleteStudentSuccess">/admin/studentManage/studentManage.jsp</result>
 		</action>
 	</package>
 
