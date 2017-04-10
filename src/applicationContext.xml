@@ -6,7 +6,7 @@
 
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/ifat"></property>
 		<property name="username" value="root"></property>
 		<property name="password" value="root"></property>
@@ -29,6 +29,8 @@
 				<value>com/ifat/dao/Student.hbm.xml</value>
 				<value>com/ifat/dao/Class.hbm.xml</value>
 				<value>com/ifat/dao/Admin.hbm.xml</value>
+				<value>com/ifat/dao/Questionnaire.hbm.xml</value>
+				<value>com/ifat/dao/ClassQuestionnaire.hbm.xml</value>
 			</list>
 		</property>
 	</bean>
@@ -54,7 +56,17 @@
 			<ref bean="sessionFactory" />
 		</property>
 	</bean>
-	
+	<bean id="QuestionnaireDAO" class="com.ifat.dao.QuestionnaireDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="ClassQuestionnaireDAO" class="com.ifat.dao.ClassQuestionnaireDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
 	<!-- Service -->
 	<bean id="adminService" class="com.ifat.service.AdminService"
 		scope="prototype">
@@ -66,8 +78,13 @@
 		scope="prototype">
 		<property name="studentDAO" ref="StudentDAO"></property>
 	</bean>
+	<bean id="questionnaireService" class="com.ifat.service.QuestionnaireService"
+		scope="prototype">
+		<property name="questionnaireDAO" ref="QuestionnaireDAO"></property>
+		<property name="classQuestionnaireDAO" ref="ClassQuestionnaireDAO"></property>
+	</bean>
 	<!-- Action -->
-	
+
 	<bean id="adminBasicOperationAction" class="com.ifat.action.AdminBasicOperationAction"
 		scope="prototype">
 		<property name="adminService" ref="adminService"></property>

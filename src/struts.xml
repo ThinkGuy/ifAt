@@ -11,13 +11,20 @@
 			<result name="changePasswordSuccess">/admin/basicOperation/changePasswordSuccess.jsp
 			</result>
 			<result name="changePasswordFailed">/admin/basicOperation/changePassword.jsp</result>
+			<!-- 班级管理  -->
 			<result name="addClassSuccess">/admin/classManage/addClassSuccess.jsp</result>
 			<result name="addClassFailed">/admin/classManage/addClass.jsp</result>
 			<result name="displayClasses">/admin/classManage/classManage.jsp</result>
 			<result name="deleteClassSuccess">/admin/classManage/classManage.jsp</result>
+			<!-- 学生管理 -->
 			<result name="searchStudentsByClassSuccess">/admin/classManage/addClassSuccess.jsp</result>
 			<result name="displayStudentsSuccess">/admin/studentManage/studentManage.jsp</result>
 			<result name="deleteStudentSuccess">/admin/studentManage/studentManage.jsp</result>
+			<!-- 试卷管理  -->
+			<result name="addQuestionnaireSuccess">/admin/questionnaireManage/questionnaireManage.jsp</result>
+			<result name="displayQuestionnairesSuccess">/admin/questionnaireManage/questionnaireManage.jsp</result>
+			<result name="deleteQuestionnaireSuccess">/admin/questionnaireManage/questionnaireManage.jsp</result>
+			
 		</action>
 	</package>
 

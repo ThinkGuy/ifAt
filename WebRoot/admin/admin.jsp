@@ -113,12 +113,11 @@
 							<span>试卷管理</span> <i class="fa fa-angle-left pull-right"></i>
 					</a>
 						<ul class="treeview-menu">
-							<li><a href="#"><i class="fa fa-angle-double-right"></i>
-									生成试卷</a></li>
-							<li><a href="#"><i class="fa fa-angle-double-right"></i>
-									删除试卷</a></li>
-							<li><a href="#"><i class="fa fa-angle-double-right"></i>
-									修改试卷</a></li>
+							<li><a href="<%=basePath%>/Admin/QuestionnaireOperation_displayQuestionnaires.action"><i class="fa fa-angle-double-right"></i>
+									试卷管理中心</a></li>
+							<li><a
+								href="<%=basePath%>admin/questionnaireManage/addQuestionnaire.jsp"><i
+									class="fa fa-angle-double-right"></i> 生成试卷</a></li>
 						</ul></li>
 					<li class="treeview"><a href="#"> <i class="fa fa-edit"></i>
 							<span>班级管理</span> <i class="fa fa-angle-left pull-right"></i>

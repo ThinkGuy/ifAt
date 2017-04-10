@@ -191,7 +191,7 @@ public class AdminBasicOperationAction extends SuperAction implements
 				.findAll());
 		return "deleteStudentSuccess";
 	}
-
+	
 	@Override
 	public Admin getModel() {
 
