@@ -47,6 +47,8 @@
 														onclick="window.location.href='<%=basePath%>Admin/AdminBasicOperation_deleteClass.action?cid=${c.id}'">删除</button>
 													<button class="btn btn-info btn-sm"
 														onclick="window.location.href='<%=basePath%>Admin/AdminBasicOperation_searchStudentsByClass.action?cid=${c.id}'">查看学生</button>
+													<button class="btn btn-info btn-sm"
+														onclick="window.location.href='#'">绑定试卷</button>
 												</td>
 											</tr>
 										</c:forEach>

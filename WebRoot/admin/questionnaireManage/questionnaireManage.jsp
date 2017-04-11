@@ -36,24 +36,24 @@
 									<thead>
 										<tr>
 											<th>试卷名</th>
-											<th>班级</th>
 											<th>操作</th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${request.questionnaireList}" var="questionnaire">
+										<c:forEach items="${request.questionnaireList}"
+											var="questionnaire">
 											<tr>
 												<td>${questionnaire.name}</td>
-												<td>${request.className}</td>
 												<td><button class="btn btn-info btn-sm"
-														onclick="window.location.href='<%=basePath%>/Admin/QuestionnaireOperation_deleteQuestionnaire.action?id=${questionnaire.id}'">删除</button></td>
+														onclick="window.location.href='<%=basePath%>/Admin/QuestionnaireOperation_deleteQuestionnaire.action?id=${questionnaire.id}'">删除</button>
+													<button class="btn btn-info btn-sm"
+														onclick="window.location.href='#'">修改</button></td>
 											</tr>
 										</c:forEach>
 									</tbody>
 									<tfoot>
 										<tr>
 											<th>试卷名</th>
-											<th>班级</th>
 											<th>操作</th>
 										</tr>
 									</tfoot>

@@ -35,7 +35,6 @@ public class QuestionnaireOperationAction extends SuperAction implements
 				.dealWithAddQuestionnaire(questionnaire))) {
 			request.setAttribute("questionnaireList", questionnaireService
 					.getQuestionnaireDAO().findAll());
-			request.setAttribute("className", "NONE");
 			request.setAttribute("Info", "试卷： " + questionnaire.getName()
 					+ ",添加成功!");
 			return "addQuestionnaireSuccess";
@@ -58,7 +57,6 @@ public class QuestionnaireOperationAction extends SuperAction implements
 
 		request.setAttribute("questionnaireList", questionnaireService
 				.getQuestionnaireDAO().findAll());
-		request.setAttribute("className", "NONE");
 		request.setAttribute("Info", "试卷如下:");
 		return "displayQuestionnairesSuccess";
 	}
