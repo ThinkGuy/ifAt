@@ -1,5 +1,9 @@
 package com.ifat.action;
 
+import java.util.ArrayList;
+
+import com.ifat.model.Question;
+import com.ifat.model.Questionnaire;
 import com.ifat.model.Student;
 import com.ifat.service.StudentService;
 import com.opensymphony.xwork2.ModelDriven;
@@ -28,7 +32,7 @@ public class StudentBasicOperationAction extends SuperAction implements
 			student = (Student) studentService.getStudentDAO().findByName(student.getName()).get(0);
 			session.setAttribute("studentId", student.getId());
 			session.setAttribute("studentName", student.getName());
-			//TODO debug.
+			//TODO 显示试题.
 			displayQuestionnaire();
 			return "studentLoginSuccess";
 		}
@@ -45,7 +49,9 @@ public class StudentBasicOperationAction extends SuperAction implements
 	public String displayQuestionnaire() {
 		student.setCid(session.getAttribute("studentId").toString());
 		
-		request.setAttribute("questionList", studentService.dealWithDisplayQuestionnaire(student));
+		ArrayList<Question> questions = studentService.dealWithDisplayQuestionnaire(student);
+		request.setAttribute("questionList", questions);
+		session.setAttribute("questionList", questions);
 		return "displayQuestionnaireSuccess";
 	}
 
