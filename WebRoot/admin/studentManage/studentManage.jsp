@@ -28,7 +28,7 @@
 					<div class="col-xs-12">
 						<div class="box">
 							<div class="box-header">
-								<h3 class="box-title">${request.Info}</h3>
+								<button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Print</button>
 							</div>
 							<!-- /.box-header -->
 							<div class="box-body table-responsive">

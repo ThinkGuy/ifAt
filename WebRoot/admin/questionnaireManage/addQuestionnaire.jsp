@@ -46,7 +46,9 @@
 							</div>
 							<div class="form-group">
 								<label>试卷Json格式</label>
-								<textarea class="form-control" rows="3" placeholder="Enter ..."
+								<textarea class="form-control" rows="3" placeholder="{{'Title':'title1','A':'a1','B':'b1','C':'c1','D':'d1','Answer':'A'},
+					           					{'Title':'title2', 'A':'a2','B':'b2','C':'c2','D':'d2','Answer':'B'},
+					        					......}"
 									disabled></textarea>
 							</div>
 							<div class="row clearfix">
