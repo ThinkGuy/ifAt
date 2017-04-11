@@ -77,6 +77,8 @@
 	<bean id="studentService" class="com.ifat.service.StudentService"
 		scope="prototype">
 		<property name="studentDAO" ref="StudentDAO"></property>
+		<property name="questionnaireDAO" ref="QuestionnaireDAO"></property>
+		<property name="classQuestionnaireDAO" ref="ClassQuestionnaireDAO"></property>
 	</bean>
 	<bean id="questionnaireService" class="com.ifat.service.QuestionnaireService"
 		scope="prototype">
