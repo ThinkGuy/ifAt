@@ -5904,7 +5904,7 @@ a[class*=button-].button-light,input[class*=button-].button-light,button[class*=
 }
 
 .fluid-container {
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
