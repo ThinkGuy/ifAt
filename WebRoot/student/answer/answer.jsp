@@ -27,7 +27,6 @@
 
 </head>
 <body>
-
 	<!-- HEADER -->
 	<div class="fluid-container">
 		<header class="site-header">
