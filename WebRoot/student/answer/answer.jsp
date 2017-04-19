@@ -40,7 +40,7 @@
 							data-toggle="collapse" data-target=".navbar-collapse">
 							<i class="fa fa-bars"></i>
 						</button>
-						<a class="navbar-brand" href="../index.jsp">if-at</a>
+						<a class="navbar-brand" onclick="window.location.href='<%=basePath%>index.jsp'">if-at</a>
 					</div>
 					<div class="navbar-collapse collapse">
 						<ul class="nav navbar-nav navbar-right">
