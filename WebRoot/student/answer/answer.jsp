@@ -40,7 +40,8 @@
 							data-toggle="collapse" data-target=".navbar-collapse">
 							<i class="fa fa-bars"></i>
 						</button>
-						<a class="navbar-brand" onclick="window.location.href='<%=basePath%>index.jsp'">if-at</a>
+						<a class="navbar-brand"
+							onclick="window.location.href='<%=basePath%>index.jsp'">if-at</a>
 					</div>
 					<div class="navbar-collapse collapse">
 						<ul class="nav navbar-nav navbar-right">
@@ -102,7 +103,8 @@
 									type="radio" name="r${status.count}" class="flat-red" /> <strong>&nbsp;${question.c}</strong>
 								</label><br> <label>&nbsp;&nbsp;&nbsp;&nbsp;<input
 									type="radio" name="r${status.count}" class="flat-red" /> <strong>&nbsp;${question.d}</strong>
-								</label><br>
+								</label><br> &nbsp;&nbsp;&nbsp;
+								<button class="btn btn-info btn-sm" onclick="">确定</button>
 							</div>
 						</div>
 						<!-- /.box-body -->
