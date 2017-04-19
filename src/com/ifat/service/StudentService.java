@@ -96,7 +96,7 @@ public class StudentService {
 		}
 		
 		Questionnaire questionnaire = questionnaireDAO.findById(classQuestionnaire.getQid());
-		String questionJson = questionnaire.getQuestionnaire();
+		String questionJson = questionnaire.getQuestionnaire().trim();
 		return dealWithQuestionJson(questionJson);
 	}
 	
@@ -107,10 +107,6 @@ public class StudentService {
 	public ArrayList<Question> dealWithQuestionJson(String questionJson) {
 		Gson gson = new Gson(); 
 		ArrayList<Question> questions = gson.fromJson(questionJson, new TypeToken<List<Question>>(){}.getType());
-		
-		for (Question question : questions) {
-			System.out.println(question.toString());
-		}
 		return questions;
 	}
 

@@ -15,6 +15,9 @@
 <meta charset="utf-8">
 <title>Modest - Free Web Template</title>
 <!-- Main Stylesheet -->
+<!-- Theme style -->
+<link href="<%=basePath%>css/AdminLTE.css" rel="stylesheet"
+	type="text/css" />
 <link href="<%=basePath%>css/iCheck/all.css" rel="stylesheet"
 	type="text/css" />
 <link rel="stylesheet" href="<%=basePath%>css/animate.css">
@@ -37,11 +40,12 @@
 							data-toggle="collapse" data-target=".navbar-collapse">
 							<i class="fa fa-bars"></i>
 						</button>
-						<a class="navbar-brand" href="<%=basePath%>index.jsp">if-at</a>
+						<a class="navbar-brand" href="../index.jsp">if-at</a>
 					</div>
 					<div class="navbar-collapse collapse">
 						<ul class="nav navbar-nav navbar-right">
 							<li><a class="link-service" href="#services">答题</a></li>
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -65,6 +69,8 @@
 						<h2 class="animated fadeInDown">欢迎使用if-at</h2>
 						<br>
 						<p class="animated fadeInRight">还有30分钟</p>
+						<br> <a href="#services"
+							class="button-grey animated fadeInUp">开始答题</a>
 					</div>
 				</div>
 			</div>
@@ -100,7 +106,7 @@
 							</div>
 						</div>
 						<!-- /.box-body -->
-						<div class="box-footer">------------------------------------------------------------------------------------------------------------------------------------------------------------</div>
+						<div class="box-footer">if-at答题结果分析，提示</div>
 					</div>
 					<!-- /.box -->
 				</c:forEach>
