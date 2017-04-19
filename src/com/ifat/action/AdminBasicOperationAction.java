@@ -109,6 +109,42 @@ public class AdminBasicOperationAction extends SuperAction implements
 	}
 
 	/**
+	 * 分配试卷显示试卷。
+	 * 
+	 * @return
+	 */
+	public String displayOfferQuestionnaire() {
+		if (session.getAttribute("adminId") == null) {
+			return "LoginNotYet";
+		}
+		
+		
+		session.setAttribute("cid", request.getParameter("cid"));
+		request.setAttribute("questionnaireList", adminService.getQuestionnaireDAO().findAll());
+		request.setAttribute("Info", "试卷如下,请选择:");
+
+		return "displayOfferQuestionnaireSuccess";
+	}
+
+	/**
+	 * 给班级分配试卷。
+	 * 
+	 * @return
+	 */
+	public String offerQuestionnaire() {
+		if (session.getAttribute("adminId") == null) {
+			return "LoginNotYet";
+		}
+
+		String cid = session.getAttribute("cid").toString();
+		String qid = request.getParameter("qid");
+		
+		adminService.dealwithOfferQuestionnaire(cid, qid);
+
+		return "offerQuestionnaireSuccess";
+	}
+
+	/**
 	 * 显示所有班级。
 	 * 
 	 * @return
@@ -154,8 +190,7 @@ public class AdminBasicOperationAction extends SuperAction implements
 		String classname = adminService.getClassDAO()
 				.findById(request.getParameter("cid")).getName();
 		request.setAttribute("className", classname);
-		request.setAttribute("Info", "班级" + classname
-				+ "的学生信息如下所示：");
+		request.setAttribute("Info", "班级" + classname + "的学生信息如下所示：");
 		return "searchStudentsByClassSuccess";
 	}
 
@@ -191,7 +226,7 @@ public class AdminBasicOperationAction extends SuperAction implements
 				.findAll());
 		return "deleteStudentSuccess";
 	}
-	
+
 	@Override
 	public Admin getModel() {
 

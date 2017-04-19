@@ -14,11 +14,11 @@
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<h1>
-					班级管理中心 <small>控制面板</small>
+					${request.Info} <small>控制面板</small>
 				</h1>
 				<ol class="breadcrumb">
 					<li class="active"><a href="#"><i class="fa fa-dashboard"></i>
-							班级管理中心</a></li>
+							分配试卷</a></li>
 				</ol>
 			</section>
 
@@ -35,27 +35,24 @@
 								<table id="example1" class="table table-bordered table-striped">
 									<thead>
 										<tr>
-											<th>班级名</th>
+											<th>试卷名</th>
 											<th>操作</th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${request.classList}" var="c">
+										<c:forEach items="${request.questionnaireList}"
+											var="questionnaire">
 											<tr>
-												<td>${c.name}</td>
+												<td>${questionnaire.name}</td>
 												<td><button class="btn btn-info btn-sm"
-														onclick="window.location.href='<%=basePath%>Admin/AdminBasicOperation_deleteClass.action?cid=${c.id}'">删除</button>
-													<button class="btn btn-info btn-sm"
-														onclick="window.location.href='<%=basePath%>Admin/AdminBasicOperation_searchStudentsByClass.action?cid=${c.id}'">查看学生</button>
-													<button class="btn btn-info btn-sm"
-														onclick="window.location.href='<%=basePath%>Admin/AdminBasicOperation_displayOfferQuestionnaire.action?cid=${c.id}'">绑定试卷</button>
-												</td>
+														onclick="window.location.href='<%=basePath%>Admin/AdminBasicOperation_offerQuestionnaire.action?qid=${questionnaire.id}'">选择</button>
+													</td>
 											</tr>
 										</c:forEach>
 									</tbody>
 									<tfoot>
 										<tr>
-											<th>班级名</th>
+											<th>试卷名</th>
 											<th>操作</th>
 										</tr>
 									</tfoot>

@@ -73,6 +73,8 @@
 		<property name="adminDAO" ref="AdminDAO"></property>
 		<property name="classDAO" ref="ClassDAO"></property>
 		<property name="studentDAO" ref="StudentDAO"></property>
+		<property name="questionnaireDAO" ref="QuestionnaireDAO"></property>
+		<property name="classQuestionnaireDAO" ref="ClassQuestionnaireDAO"></property>
 	</bean>
 	<bean id="studentService" class="com.ifat.service.StudentService"
 		scope="prototype">

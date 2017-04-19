@@ -1,11 +1,16 @@
 package com.ifat.service;
 
+import java.util.List;
 import java.util.UUID;
+
 import com.ifat.dao.AdminDAO;
 import com.ifat.dao.ClassDAO;
+import com.ifat.dao.ClassQuestionnaireDAO;
+import com.ifat.dao.QuestionnaireDAO;
 import com.ifat.dao.StudentDAO;
 import com.ifat.model.Admin;
 import com.ifat.model.Class;
+import com.ifat.model.ClassQuestionnaire;
 import com.ifat.model.Student;
 
 /**
@@ -19,6 +24,8 @@ public class AdminService {
 	private AdminDAO adminDAO;
 	private ClassDAO classDAO;
 	private StudentDAO studentDAO;
+	private QuestionnaireDAO questionnaireDAO;
+	private ClassQuestionnaireDAO classQuestionnaireDAO;
 	
 	/**
 	 * @return the adminDAO
@@ -61,6 +68,34 @@ public class AdminService {
 	 */
 	public void setStudentDAO(StudentDAO studentDAO) {
 		this.studentDAO = studentDAO;
+	}
+
+	/**
+	 * @return the questionnaireDAO
+	 */
+	public QuestionnaireDAO getQuestionnaireDAO() {
+		return questionnaireDAO;
+	}
+
+	/**
+	 * @param questionnaireDAO the questionnaireDAO to set
+	 */
+	public void setQuestionnaireDAO(QuestionnaireDAO questionnaireDAO) {
+		this.questionnaireDAO = questionnaireDAO;
+	}
+
+	/**
+	 * @return the classQuestionnaireDAO
+	 */
+	public ClassQuestionnaireDAO getClassQuestionnaireDAO() {
+		return classQuestionnaireDAO;
+	}
+
+	/**
+	 * @param classQuestionnaireDAO the classQuestionnaireDAO to set
+	 */
+	public void setClassQuestionnaireDAO(ClassQuestionnaireDAO classQuestionnaireDAO) {
+		this.classQuestionnaireDAO = classQuestionnaireDAO;
 	}
 
 	/**
@@ -137,6 +172,26 @@ public class AdminService {
 		//删除班级下的所有学生。
 		studentDAO.deleteByClassId(cid);
 		return "班级：" + c.getName() + "已被删除";
+	}
+	
+	/**
+	 * 给班级分配试卷。
+	 * @param cid
+	 * @param qid
+	 */
+	public String dealwithOfferQuestionnaire(String cid, String qid) {
+		
+		// TODO 存在试卷处理。
+		if (classQuestionnaireDAO.findByCid(cid).size() > 0) {
+			return "该班级存在激活试卷，请重新分配";
+		}
+		
+		ClassQuestionnaire classQuestionnaire = new ClassQuestionnaire();
+		classQuestionnaire.setId(UUID.randomUUID().toString());
+		classQuestionnaire.setCid(cid);
+		classQuestionnaire.setQid(qid);
+		classQuestionnaireDAO.save(classQuestionnaire);
+		return "分配成功";
 	}
 	
 	/**
