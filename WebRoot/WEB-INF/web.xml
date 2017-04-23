@@ -16,4 +16,13 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath:applicationContext.xml</param-value>
   </context-param>
+  
+  <servlet>  
+    <servlet-name>wsServlet</servlet-name>  
+    <servlet-class>com.webSocket.WebSock</servlet-class>  
+  </servlet>  
+  <servlet-mapping>  
+    <servlet-name>wsServlet</servlet-name>  
+    <url-pattern>/wsServlet</url-pattern>  
+  </servlet-mapping>  
 </web-app>

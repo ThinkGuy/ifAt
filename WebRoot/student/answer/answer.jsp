@@ -70,8 +70,9 @@
 						<h2 class="animated fadeInDown">欢迎使用if-at</h2>
 						<br>
 						<p class="animated fadeInRight">还有30分钟</p>
-						<br> <a href="#services"
-							class="button-grey animated fadeInUp">开始答题</a>
+						<br>
+						<button class="button-grey animated fadeInUp" id="answer"
+							onclick="startAnswer()">开始答题</button>
 					</div>
 				</div>
 			</div>
@@ -96,19 +97,24 @@
 							<!-- radio -->
 							<div class="form-group">
 								<label>&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"
-									name="r${status.count}" class="flat-red" /> <strong>&nbsp;${question.a}</strong>
+									name="r${status.count}" class="flat-red"
+									value="${status.count}a" /> <strong>&nbsp;${question.a}</strong>
 								</label><br> <label>&nbsp;&nbsp;&nbsp;&nbsp;<input
-									type="radio" name="r${status.count}" class="flat-red" /> <strong>&nbsp;${question.b}</strong>
+									type="radio" name="r${status.count}" 
+									class="flat-red" value="${status.count}b" /> <strong>&nbsp;${question.b}</strong>
 								</label><br> <label>&nbsp;&nbsp;&nbsp;&nbsp;<input
-									type="radio" name="r${status.count}" class="flat-red" /> <strong>&nbsp;${question.c}</strong>
+									type="radio" name="r${status.count}" 
+									class="flat-red" value="${status.count}c" /> <strong>&nbsp;${question.c}</strong>
 								</label><br> <label>&nbsp;&nbsp;&nbsp;&nbsp;<input
-									type="radio" name="r${status.count}" class="flat-red" /> <strong>&nbsp;${question.d}</strong>
+									type="radio" name="r${status.count}"
+									class="flat-red" value="${status.count}d" /> <strong>&nbsp;${question.d}</strong>
 								</label><br> &nbsp;&nbsp;&nbsp;
-								<button class="btn btn-info btn-sm" onclick="">确定</button>
+								<button class="q btn btn-info btn-sm" disabled="disabled"
+									onclick="sendMessage(this)" id="q${status.count}">确定</button>
 							</div>
 						</div>
 						<!-- /.box-body -->
-						<div class="box-footer">if-at答题结果分析，提示</div>
+						<div class="box-footer" id="footer${status.count}">if-at答题结果分析:</div>
 					</div>
 					<!-- /.box -->
 				</c:forEach>
@@ -173,7 +179,60 @@
 		});
 	</script>
 
-	<!-- Google Map -->
+	<script type="text/javascript">
+		var webSocket = null;
+		var flag = true;//全局标记位，标记浏览器是否支持websocket
+		$(function() {
+			if (!window.WebSocket) {
+				$("body").append("<h1>你的浏览器不支持WebSocket</h1>");
+				flag = false;
+				return;
+			}
+
+		});
+
+		function startAnswer(event) {
+			startConnect(event);
+		}
+
+		function startConnect(event) {
+			if (flag == false) {
+				return;
+			}
+			var url = "ws://localhost:8080/ifAt/ws/websocket";
+			webSocket = new WebSocket(url);
+
+			webSocket.onerror = function(event) {
+				onError(event)
+			};
+			webSocket.onopen = function(event) {
+				onOpen(event)
+			};
+			webSocket.onmessage = function(event) {
+				onMessage(event)
+			};
+
+		}
+		function onMessage(event) {
+			var content = event.data;
+			var footer = "footer" + content.substring(0,1);
+			content = content.substring(1, content.length);
+			$("#" + footer).append("</br><a color='blue'> <Strong>&nbsp;"+ content + "</Strong></a>");
+		}
+		function onOpen(event) {
+			$("#answer").prop("disabled", true);
+			$(".q").prop("disabled", false);
+		}
+		function onError(event) {
+			$(".infos").append("<li class='red'>连接服务器发生错误</li>");
+		}
+		function sendMessage(obj) {
+			var end=obj.id;
+			var rid="r"+end.substring(1,end.length);
+			var msg = $("input[name="+rid+"][type='radio']:checked").val();
+			webSocket.send(msg);//向服务器发送消息
+		}
+	</script>
 
 </body>
 </html>

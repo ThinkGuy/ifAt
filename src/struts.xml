@@ -38,4 +38,6 @@
 			<result name="studentLoginFailed">/student/basicOperation/login.jsp</result>
 		</action>
 	</package>
+	
+	<constant name="struts.action.excludePattern" value="/ws/.*,ws://.*"></constant>
 </struts>    
