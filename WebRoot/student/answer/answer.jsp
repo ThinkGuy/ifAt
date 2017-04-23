@@ -215,8 +215,12 @@
 		}
 		function onMessage(event) {
 			var content = event.data;
-			var footer = "footer" + content.substring(0,1);
+			var tag = content.substring(0,1);
+			var footer = "footer" + tag;
 			content = content.substring(1, content.length);
+			if (content == "答案正确") {
+				$("#q" + tag).prop("disabled", true);
+			}
 			$("#" + footer).append("</br><a color='blue'> <Strong>&nbsp;"+ content + "</Strong></a>");
 		}
 		function onOpen(event) {
