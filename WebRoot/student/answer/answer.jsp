@@ -221,6 +221,7 @@
 			if (content == "答案正确") {
 				$("#q" + tag).prop("disabled", true);
 			}
+			
 			$("#" + footer).append("</br><a color='blue'> <Strong>&nbsp;"+ content + "</Strong></a>");
 		}
 		function onOpen(event) {
