@@ -14,7 +14,6 @@
 	content="width=device-width, initial-scale=1, minimal-ui">
 <meta charset="utf-8">
 <title>Modest - Free Web Template</title>
-<!-- Main Stylesheet -->
 <!-- Theme style -->
 <link href="<%=basePath%>css/AdminLTE.css" rel="stylesheet"
 	type="text/css" />
@@ -71,7 +70,7 @@
 						<br>
 						<p class="animated fadeInRight">还有30分钟</p>
 						<br>
-						<button class="button-grey animated fadeInUp" id="answer"
+						<button class="animated fadeInUp btn btn-warning btn-lg" id="answer"
 							onclick="startAnswer()">开始答题</button>
 					</div>
 				</div>
@@ -97,24 +96,30 @@
 							<!-- radio -->
 							<div class="form-group">
 								<label>&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"
-									name="r${status.count}" class="flat-red"
-									value="${status.count}a" /> <strong>&nbsp;${question.a}</strong>
+									name="r${status.count}" id="r${status.count}a" class="flat-red"
+									value="${status.count}a" /> <a style='color:black'
+									id="a${status.count}a"><strong>&nbsp;${question.a}</strong></a>
 								</label><br> <label>&nbsp;&nbsp;&nbsp;&nbsp;<input
-									type="radio" name="r${status.count}" 
-									class="flat-red" value="${status.count}b" /> <strong>&nbsp;${question.b}</strong>
+									type="radio" name="r${status.count}" id=r${status.count}b
+									class="flat-red" value="${status.count}b" /> <a
+									style='color:black' id="a${status.count}b"><strong>&nbsp;${question.b}</strong></a>
 								</label><br> <label>&nbsp;&nbsp;&nbsp;&nbsp;<input
-									type="radio" name="r${status.count}" 
-									class="flat-red" value="${status.count}c" /> <strong>&nbsp;${question.c}</strong>
+									type="radio" name="r${status.count}" id=r${status.count}c
+									class="flat-red" value="${status.count}c" /> <a
+									style='color:black' id="a${status.count}c"><strong>&nbsp;${question.c}</strong></a>
 								</label><br> <label>&nbsp;&nbsp;&nbsp;&nbsp;<input
-									type="radio" name="r${status.count}"
-									class="flat-red" value="${status.count}d" /> <strong>&nbsp;${question.d}</strong>
+									type="radio" name="r${status.count}" id=r${status.count}d
+									class="flat-red" value="${status.count}d" /> <a
+									style='color:black' id="a${status.count}d"><strong>&nbsp;${question.d}</strong></a>
 								</label><br> &nbsp;&nbsp;&nbsp;
 								<button class="q btn btn-info btn-sm" disabled="disabled"
 									onclick="sendMessage(this)" id="q${status.count}">确定</button>
 							</div>
 						</div>
 						<!-- /.box-body -->
-						<div class="box-footer" id="footer${status.count}">if-at答题结果分析:</div>
+						<div class="box-footer" id="footer${status.count}">
+							<Strong>if-at答题结果分析:</Strong>
+						</div>
 					</div>
 					<!-- /.box -->
 				</c:forEach>
@@ -215,14 +220,26 @@
 		}
 		function onMessage(event) {
 			var content = event.data;
-			var tag = content.substring(0,1);
+			var tag = content.substring(0, 1);
+			var aid = "a" + content.substring(0, 2);
+			var rid = "r" + content.substring(0, 2);
 			var footer = "footer" + tag;
-			content = content.substring(1, content.length);
-			if (content == "答案正确") {
+			content = content.substring(2, content.length);
+			if (content.match("答案错误")) {
+				$("#" + rid).prop("checked", false);
+				$("#" + rid).prop("disabled", true);
+				$("#" + aid).prop("style", "color:red");
+				$("#" + footer).append(
+						"</br><a style='color:red'> <Strong>&nbsp;" + content
+								+ "</Strong></a>");
+			} else {
 				$("#q" + tag).prop("disabled", true);
+				$("#" + aid).prop("style", "color:blue");
+				$("#" + footer).append(
+						"</br><font color='blue'> <Strong>&nbsp;" + content
+								+ "</Strong></font>");
 			}
-			
-			$("#" + footer).append("</br><a color='blue'> <Strong>&nbsp;"+ content + "</Strong></a>");
+
 		}
 		function onOpen(event) {
 			$("#answer").prop("disabled", true);
@@ -232,10 +249,13 @@
 			$(".infos").append("<li class='red'>连接服务器发生错误</li>");
 		}
 		function sendMessage(obj) {
-			var end=obj.id;
-			var rid="r"+end.substring(1,end.length);
-			var msg = $("input[name="+rid+"][type='radio']:checked").val();
-			webSocket.send(msg);//向服务器发送消息
+			var end = obj.id;
+			var rname = "r" + end.substring(1, end.length);
+			var msg = $("input[name=" + rname + "][type='radio']:checked")
+					.val();
+			if (msg != undefined) {
+				webSocket.send(msg);//向服务器发送消息
+			}
 		}
 	</script>
 

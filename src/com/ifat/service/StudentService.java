@@ -109,5 +109,4 @@ public class StudentService {
 		ArrayList<Question> questions = gson.fromJson(questionJson, new TypeToken<List<Question>>(){}.getType());
 		return questions;
 	}
-
 }

@@ -8,6 +8,8 @@ public class Question {
 	private String c;
 	private String d;
 	private String answer;
+	private Integer times = 0;
+	private Integer score = 0;
 	public String getTitle() {
 		return title;
 	}
@@ -43,6 +45,18 @@ public class Question {
 	}
 	public void setAnswer(String answer) {
 		this.answer = answer;
+	}
+	public Integer getTimes() {
+		return times;
+	}
+	public void setTimes(Integer times) {
+		this.times = times;
+	}
+	public Integer getScore() {
+		return score;
+	}
+	public void setScore(Integer score) {
+		this.score = score;
 	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
