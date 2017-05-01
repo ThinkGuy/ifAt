@@ -204,6 +204,5 @@ public class AdminService {
 		studentDAO.delete(student);
 		return "学生：" + student.getName() + "已被删除";
 	}
-	
 
 }

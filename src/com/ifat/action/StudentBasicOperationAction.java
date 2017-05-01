@@ -80,8 +80,8 @@ public class StudentBasicOperationAction extends SuperAction implements
 			question.setTimes(++times);
 			result = message + " 答案错误,请继续答题";
 		}
-
-		questions.set(tag, question);
+//		questions.remove(tag - 1);
+		questions.set(tag - 1, question);
 		httpSession.setAttribute("questionList", questions);
 		return result;
 	}
