@@ -206,12 +206,17 @@ public class StudentBasicOperationAction extends SuperAction implements
 		int score = 0;
 		double accuracy = 0;
 		int times = 0;
+		int qscore = 0;
 		
 		ArrayList<Question> questions = (ArrayList<Question>)session.getAttribute("questionList");
 		
 		for (Question question : questions) {
-			times = question.getTimes();
+			qscore = question.getScore();
+			if (qscore == 0) {
+				continue;
+			}
 			
+			times = question.getTimes();
 			if (times == 1) {
 				firstRightNum ++;
 			} else if (times == 2) {
@@ -222,7 +227,7 @@ public class StudentBasicOperationAction extends SuperAction implements
 				fourthRightNum ++;
 			} 
 			
-			score = score + question.getScore();
+			score = score + qscore;
 		}
 		
 		accuracy = score/(double)(questions.size()*PERSCORE)*100;

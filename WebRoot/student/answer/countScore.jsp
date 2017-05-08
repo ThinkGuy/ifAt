@@ -17,8 +17,6 @@
 <!-- Theme style -->
 <link href="<%=basePath%>css/AdminLTE.css" rel="stylesheet"
 	type="text/css" />
-<link href="<%=basePath%>css/iCheck/all.css" rel="stylesheet"
-	type="text/css" />
 <link rel="stylesheet" href="<%=basePath%>css/animate.css">
 <link rel="stylesheet" href="<%=basePath%>css/font-awesome.min.css">
 <link rel="stylesheet" href="<%=basePath%>css/templatemo-style.css">
@@ -44,7 +42,7 @@
 					</div>
 					<div class="navbar-collapse collapse">
 						<ul class="nav navbar-nav navbar-right">
-							<li><a class="link-service" href="#services">答题</a></li>
+							<li><a>${session.studentName}</a></li>
 						</ul>
 					</div>
 				</div>
@@ -77,13 +75,6 @@
 
 		<!-- FUN FACTS -->
 		<div class="fluid-container animated flipInX" id="facts">
-			<div class="row">
-				<div class="col-md-12 text-right">
-					<div class="section-header facts-header">
-						<h3>答题结果分析</h3>
-					</div>
-				</div>
-			</div>
 			<div class="section-facts">
 				<div class="row">
 					<div class="col-md-3 col-sm-6 col-xs-12 col-lg-3 text-center">

@@ -126,7 +126,7 @@
 				<div class="row">
 					<div class="col-md-6 col-sm-0 col-xs-12 col-lg-12 text-center">
 						<button class="animated btn btn-warning btn-lg" id="submit" disabled="disabled"
-							onclick="window.location.href='<%=basePath%>Student/StudentBasicOperation_countScore.action'">提交</button>
+							onclick="countScore()">提交</button>
 					</div>
 					<!-- .counter-item -->
 				</div>
@@ -264,6 +264,12 @@
 			if (msg != undefined) {
 				webSocket.send(msg);//向服务器发送消息
 			}
+		}
+		function countScore(event) {
+			webSocket.onclose = function(event) {
+			
+			};
+			self.location="<%=basePath%>Student/StudentBasicOperation_countScore.action";
 		}
 	</script>
 
