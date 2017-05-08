@@ -34,8 +34,11 @@
 	<package name="sutdent" extends="struts-default" namespace="/Student">
 		<action name="*_*" class="com.ifat.action.{1}Action" method="{2}">
 			<!-- 管理员操作 -->
+			<result name="LoginNotYet">/student/basicOperation/login.jsp</result>
 			<result name="studentLoginSuccess">/student/answer/answer.jsp</result>
 			<result name="studentLoginFailed">/student/basicOperation/login.jsp</result>
+			<result name="countScoreSuccess">/student/answer/countScore.jsp</result>
+			<result name="logout">/index.jsp</result>
 		</action>
 	</package>
 	

@@ -66,7 +66,7 @@
 					</div>
 					<div class="col-md-8 text-center welcome-section">
 						<br>
-						<h2 class="animated fadeInDown">欢迎使用if-at</h2>
+						<h2 class="animated fadeInDown">${session.studentName},欢迎你使用if-at</h2>
 						<br>
 						<p class="animated fadeInRight">还有30分钟</p>
 						<br>
@@ -123,9 +123,16 @@
 					</div>
 					<!-- /.box -->
 				</c:forEach>
+				<div class="row">
+					<div class="col-md-6 col-sm-0 col-xs-12 col-lg-12 text-center">
+						<button class="animated btn btn-warning btn-lg" id="submit" disabled="disabled"
+							onclick="window.location.href='<%=basePath%>Student/StudentBasicOperation_countScore.action'">提交</button>
+					</div>
+					<!-- .counter-item -->
+				</div>
 			</div>
 		</div>
-
+		
 		<!-- FOOTER -->
 		<div class="fluid-container">
 			<footer class="site-footer">
@@ -142,9 +149,8 @@
 					</div>
 					<div class="col-md-6 col-sm-6 col-xs-12 padding-right-0">
 						<ul class="social">
+							<li><a href="#"><i class="fa fa-weibo"></i> 微博</a></li>
 							<li><a href="#"><i class="fa fa-facebook"></i> Facebook</a></li>
-							<li><a href="#"><i class="fa fa-twitter"></i> Twitter</a></li>
-							<li><a href="#"><i class="fa fa-youtube"></i> Youtube</a></li>
 						</ul>
 					</div>
 				</div>
@@ -220,11 +226,12 @@
 		}
 		function onMessage(event) {
 			var content = event.data;
-			var tag = content.substring(0, 1);
-			var aid = "a" + content.substring(0, 2);
-			var rid = "r" + content.substring(0, 2);
+			var array = content.split(" ");
+			var tag = array[0].substring(0, array[0].length -1);
+			var aid = "a" + array[0];
+			var rid = "r" + array[0];
 			var footer = "footer" + tag;
-			content = content.substring(2, content.length);
+			content = array[1];
 			if (content.match("答案错误")) {
 				$("#" + rid).prop("checked", false);
 				$("#" + rid).prop("disabled", true);
@@ -243,6 +250,7 @@
 		}
 		function onOpen(event) {
 			$("#answer").prop("disabled", true);
+			$("#submit").prop("disabled", false);
 			$(".q").prop("disabled", false);
 		}
 		function onError(event) {

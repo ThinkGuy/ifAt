@@ -14,6 +14,9 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
+import org.hibernate.ejb.criteria.expression.function.AggregationFunction.COUNT;
+
 import com.ifat.config.GetHttpSessionConfigurator;
 import com.ifat.model.Question;
 import com.ifat.model.Student;
@@ -25,6 +28,12 @@ import com.sun.mail.util.QEncoderStream;
 public class StudentBasicOperationAction extends SuperAction implements
 		ModelDriven<Student> {
 
+	/**
+	 * 每道题的初始分数。
+	 */
+	public static final int PERSCORE = 4; 
+	public static final int DECSCORE = 1;
+	
 	private static final long serialVersionUID = 1L;
 	private Student student;
 	private StudentService studentService;
@@ -55,32 +64,41 @@ public class StudentBasicOperationAction extends SuperAction implements
 		@SuppressWarnings("unchecked")
 		ArrayList<Question> questions = (ArrayList<Question>) httpSession
 				.getAttribute("questionList");
-		int tag = Integer.parseInt(message.substring(0, 1));
+		int tag = 0;
+		String answer = "";
+		if (message.length() == 2) {
+			tag = Integer.parseInt(message.substring(0, 1));
+			answer = message.substring(1, message.length()).trim()
+					.toLowerCase();
+		} else {
+			tag = Integer.parseInt(message.substring(0, 2));
+			answer = message.substring(2, message.length()).trim()
+					.toLowerCase();
+		}
 		Question question = questions.get(tag - 1);
-		String answer = message.substring(1, message.length()).trim()
-				.toLowerCase();
+		
 		int times = question.getTimes();
 		String result = "";
 
 		if (answer.equals(question.getAnswer().trim().toLowerCase())) {
 
 			if (times == 0) {
-				question.setScore(4);
+				question.setScore(PERSCORE);
 			} else if (times == 1) {
-				question.setScore(3);
+				question.setScore(PERSCORE - DECSCORE);
 			} else if (times == 2) {
-				question.setScore(2);
+				question.setScore(PERSCORE - 2*DECSCORE);
 			} else if (times == 3) {
-				question.setScore(1);
+				question.setScore(PERSCORE -3*DECSCORE);
 			}
-
-			result = message + " 第" + (question.getTimes() + 1) + "次答题正确，得"
+			
+			question.setTimes(++times);
+			result = message + " 第" + (times) + "次答题正确，得"
 					+ question.getScore() + "分";
 		} else {
 			question.setTimes(++times);
 			result = message + " 答案错误,请继续答题";
 		}
-//		questions.remove(tag - 1);
 		questions.set(tag - 1, question);
 		httpSession.setAttribute("questionList", questions);
 		return result;
@@ -159,6 +177,10 @@ public class StudentBasicOperationAction extends SuperAction implements
 	 * @return
 	 */
 	public String displayQuestionnaire() {
+		if (session.getAttribute("studentId") == null) {
+			return "LoginNotYet";
+		}
+		
 		student.setCid(session.getAttribute("studentId").toString());
 
 		ArrayList<Question> questions = studentService
@@ -166,6 +188,68 @@ public class StudentBasicOperationAction extends SuperAction implements
 		request.setAttribute("questionList", questions);
 		session.setAttribute("questionList", questions);
 		return "displayQuestionnaireSuccess";
+	}
+	
+	/**
+	 * 统计分数。
+	 * @return
+	 */
+	public String countScore() {
+		if (session.getAttribute("studentId") == null) {
+			return "LoginNotYet";
+		}
+		
+		int firstRightNum = 0;
+		int secondRightNum = 0;
+		int thirdRightNum = 0;
+		int fourthRightNum = 0;
+		int score = 0;
+		double accuracy = 0;
+		int times = 0;
+		
+		ArrayList<Question> questions = (ArrayList<Question>)session.getAttribute("questionList");
+		
+		for (Question question : questions) {
+			times = question.getTimes();
+			
+			if (times == 1) {
+				firstRightNum ++;
+			} else if (times == 2) {
+				secondRightNum ++;
+			} else if (times == 3) {
+				thirdRightNum ++;
+			} else if (times == 4){
+				fourthRightNum ++;
+			} 
+			
+			score = score + question.getScore();
+		}
+		
+		accuracy = score/(double)(questions.size()*PERSCORE)*100;
+		
+		request.setAttribute("firstRightNum", firstRightNum);
+		request.setAttribute("secondRightNum", secondRightNum);
+		request.setAttribute("thirdRightNum", thirdRightNum);
+		request.setAttribute("fourthRightNum", fourthRightNum);
+		request.setAttribute("score", score);
+		request.setAttribute("accuracy", accuracy);
+		
+		return "countScoreSuccess";
+	}
+	
+	/**
+	 * 退出登录。
+	 * @return
+	 */
+	public String logout() {
+		if (session.getAttribute("studentId") != null) {
+			session.setAttribute("studentId", null);
+			session.setAttribute("studentName", null);
+			// TODO 保存试卷。
+			session.setAttribute("questionList", null);
+		}
+
+		return "logout";
 	}
 
 	@Override
