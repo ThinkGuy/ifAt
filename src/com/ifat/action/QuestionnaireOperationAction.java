@@ -55,12 +55,9 @@ public class QuestionnaireOperationAction extends SuperAction implements
 			return "LoginNotYet";
 		}
 		
-		if (session.getAttribute("cqid") == null) {
-			session.setAttribute("cqid", request.getParameter("cqid").toString());
-		} 
-		System.out.println(request.getParameter("sid"));
-		questionnaire.setId(session.getAttribute("sid").toString());
-		if ("addQuestionnaireSuccess".equals(questionnaireService
+		session.setAttribute("cqid", request.getParameter("cqid").toString());
+		questionnaire.setId(session.getAttribute("cqid").toString());
+		if ("changeQuestionnaireSuccess".equals(questionnaireService
 				.dealWithChangeQuestionnaire(questionnaire))) {
 			request.setAttribute("questionnaireList", questionnaireService
 					.getQuestionnaireDAO().findAll());

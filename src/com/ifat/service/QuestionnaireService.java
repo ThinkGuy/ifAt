@@ -84,7 +84,7 @@ public class QuestionnaireService {
 			ArrayList<Questionnaire> qList = (ArrayList<Questionnaire>) questionnaireDAO
 					.findByName(questionnaire.getName());
 			if (qList.size() > 0
-					&& qList.get(0).getId().equals(questionnaire.getId())) {
+					&& !qList.get(0).getId().equals(questionnaire.getId())) {
 				return "试卷名已存在！请重输：";
 			}
 			questionnaireDAO.merge(questionnaire);
