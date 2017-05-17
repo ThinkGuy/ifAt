@@ -24,6 +24,7 @@
 			<result name="deleteStudentSuccess">/admin/studentManage/studentManage.jsp</result>
 			<!-- 试卷管理  -->
 			<result name="addQuestionnaireSuccess">/admin/questionnaireManage/questionnaireManage.jsp</result>
+			<result name="addQuestionnaireFaild">/admin/questionnaireManage/addQuestionnaire.jsp</result>
 			<result name="displayQuestionnairesSuccess">/admin/questionnaireManage/questionnaireManage.jsp</result>
 			<result name="deleteQuestionnaireSuccess">/admin/questionnaireManage/questionnaireManage.jsp</result>
 			<!-- 统计功能 -->

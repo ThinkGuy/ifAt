@@ -3,8 +3,13 @@ package com.ifat.service;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import org.apache.commons.lang.StringUtils;
+
 import antlr.collections.List;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonParser;
 import com.ifat.dao.ClassQuestionnaireDAO;
 import com.ifat.dao.QuestionnaireDAO;
 import com.ifat.model.ClassQuestionnaire;
@@ -49,10 +54,33 @@ public class QuestionnaireService {
 	 * @return
 	 */
 	public String dealWithAddQuestionnaire(Questionnaire questionnaire) {
-		questionnaire.setId(UUID.randomUUID().toString());
-		questionnaireDAO.save(questionnaire);
-		return "addQuestionnaireSuccess";
+		String q = questionnaire.getQuestionnaire();
+		if (isGoodJson(q) && q.indexOf(":")>0) {
+			questionnaire.setId(UUID.randomUUID().toString());
+			questionnaireDAO.save(questionnaire);
+			return "addQuestionnaireSuccess";
+		}
+		
+		return "addQuestionnaireFiled";
 	}
+	
+	/**
+	 * 判断是否json格式。
+	 * @param json
+	 * @return
+	 */
+	public static boolean isGoodJson(String json) {    
+	    if (StringUtils.isBlank(json)) {    
+	        return false;    
+	    }    
+	    try {    
+	    	 JsonParser jsonParser = new JsonParser();  
+	         JsonElement jsonElement =  jsonParser.parse(json); 
+	        return true;    
+	    } catch (JsonParseException e) {    
+	        return false;    
+	    }    
+	}  
 	
 	/**
 	 * 试卷删除。

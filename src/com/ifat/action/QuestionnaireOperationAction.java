@@ -40,8 +40,7 @@ public class QuestionnaireOperationAction extends SuperAction implements
 			return "addQuestionnaireSuccess";
 		}
 
-		request.setAttribute("Info", "试卷添加失败！");
-		// TODO 失败处理。
+		request.setAttribute("info", "试卷格式错误， 添加失败！");
 		return "addQuestionnaireFaild";
 	}
 

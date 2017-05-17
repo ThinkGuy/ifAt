@@ -46,9 +46,8 @@
 							</div>
 							<div class="form-group">
 								<label>试卷Json格式</label>
-								<textarea class="form-control" rows="3" placeholder="{{'Title':'title1','A':'a1','B':'b1','C':'c1','D':'d1','Answer':'A'},
-					           					{'Title':'title2', 'A':'a2','B':'b2','C':'c2','D':'d2','Answer':'B'},
-					        					......}"
+								<textarea class="form-control" rows="3" placeholder='[{"title":"1+1=","a":"1","b":"2","c":"3","d":"4","answer":"B"},
+ 							{"title":"中国有多少人","a":"13亿","b":"14亿","c":"15亿","d":"16亿","answer":"B"}]'
 									disabled></textarea>
 							</div>
 							<div class="row clearfix">

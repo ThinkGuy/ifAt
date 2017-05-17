@@ -182,9 +182,11 @@ public class AdminService {
 	 */
 	public String dealwithOfferQuestionnaire(String cid, String qid) {
 		
-		// TODO 存在试卷处理。
-		if (classQuestionnaireDAO.findByCid(cid).size() > 0) {
-			return "该班级存在激活试卷，请重新分配";
+		List<ClassQuestionnaire> list = classQuestionnaireDAO.findByCid(cid);
+		if (list.size() > 0) {
+			for (ClassQuestionnaire classQuestionnaire : list) {
+				classQuestionnaireDAO.delete(classQuestionnaire);
+			}
 		}
 		
 		ClassQuestionnaire classQuestionnaire = new ClassQuestionnaire();

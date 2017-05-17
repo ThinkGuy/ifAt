@@ -157,7 +157,6 @@ public class StudentBasicOperationAction extends SuperAction implements
 					.findByName(student.getName()).get(0);
 			session.setAttribute("studentId", student.getId());
 			session.setAttribute("studentName", student.getName());
-			// TODO 显示试题.
 			displayQuestionnaire();
 			return "studentLoginSuccess";
 		}
@@ -259,7 +258,6 @@ public class StudentBasicOperationAction extends SuperAction implements
 		if (session.getAttribute("studentId") != null) {
 			session.setAttribute("studentId", null);
 			session.setAttribute("studentName", null);
-			// TODO 保存试卷。
 			session.setAttribute("questionList", null);
 		}
 

@@ -22,7 +22,6 @@
 <link rel="stylesheet" href="<%=basePath%>css/animate.css">
 <link rel="stylesheet" href="<%=basePath%>css/font-awesome.min.css">
 <link rel="stylesheet" href="<%=basePath%>css/templatemo-style.css">
-<link rel="stylesheet" href="<%=basePath%>css/endTime/media.css">
 
 <!-- jQuery -->
 <script src="<%=basePath%>js/jquery-1.11.0.min.js"></script>
