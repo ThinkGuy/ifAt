@@ -3,8 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link href="<%=basePath%>css/datatables/dataTables.bootstrap.css"
-	rel="stylesheet" type="text/css" />
+	
 </head>
 <body class="skin-blue">
 	<!-- header logo: style can be found in header.less -->
@@ -113,8 +112,9 @@
 							<span>试卷管理</span> <i class="fa fa-angle-left pull-right"></i>
 					</a>
 						<ul class="treeview-menu">
-							<li><a href="<%=basePath%>/Admin/QuestionnaireOperation_displayQuestionnaires.action"><i class="fa fa-angle-double-right"></i>
-									试卷管理中心</a></li>
+							<li><a
+								href="<%=basePath%>/Admin/QuestionnaireOperation_displayQuestionnaires.action"><i
+									class="fa fa-angle-double-right"></i> 试卷管理中心</a></li>
 							<li><a
 								href="<%=basePath%>admin/questionnaireManage/addQuestionnaire.jsp"><i
 									class="fa fa-angle-double-right"></i> 生成试卷</a></li>
@@ -129,21 +129,14 @@
 							<li><a href="<%=basePath%>admin/classManage/addClass.jsp"><i
 									class="fa fa-angle-double-right"></i> 添加班级</a></li>
 						</ul></li>
-					<li class="treeview"><a href="#"> <i class="fa fa-table"></i>
-							<span>成绩管理</span> <i class="fa fa-angle-left pull-right"></i>
-					</a>
-						<ul class="treeview-menu">
-							<li><a href="#"><i class="fa fa-angle-double-right"></i>
-									成绩录入</a></li>
-							<li><a href="#"><i class="fa fa-angle-double-right"></i>
-									成绩修改</a></li>
-						</ul></li>
-					<li><a href="#"> <i class="fa fa-calendar"></i> <span>课程安排</span>
-							<small class="badge pull-right bg-red">3</small>
+					<li><a
+						href="<%=basePath%>admin/scoreStatistics/scoreStatistics.jsp">
+							<i class="fa fa-calendar"></i> <span>成绩统计</span>
 					</a></li>
 				</ul>
 			</section>
 			<!-- /.sidebar -->
 		</aside>
+	</div>
 </body>
 </html>

@@ -6,8 +6,6 @@
 <head>
 </head>
 <body class="skin-blue">
-	<!-- header logo: style can be found in header.less -->
-
 	<div class="row-offcanvas row-offcanvas-left">
 		<!-- Right side column. Contains the navbar and content of the page -->
 		<aside class="right-side">
@@ -61,16 +59,11 @@
 									</tfoot>
 								</table>
 							</div>
-							<!-- /.box-body -->
 						</div>
-						<!-- /.box -->
 					</div>
 				</div>
 			</section>
-			<!-- /.content -->
 		</aside>
-		<!-- /.right-side -->
 	</div>
-	<!-- ./wrapper -->
 </body>
 </html>
