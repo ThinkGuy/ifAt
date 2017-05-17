@@ -205,7 +205,7 @@
 						<div class="box box-primary">
 							<div class="box-header">
 								<i class="fa fa-bar-chart-o"></i>
-								<h3 class="box-title">题目准确率统计</h3>
+								<h3 class="box-title">单题准确率统计(单位：%)</h3>
 							</div>
 							<div class="box-body">
 								<div id="line-chart" style="height: 300px;"></div>
@@ -222,7 +222,7 @@
 						<div class="box box-primary">
 							<div class="box-header">
 								<i class="fa fa-bar-chart-o"></i>
-								<h3 class="box-title">学生成绩统计</h3>
+								<h3 class="box-title">学生成绩统计(单位：分数)</h3>
 							</div>
 							<div class="box-body">
 								<div id="bar-chart" style="height: 300px;"></div>
@@ -293,8 +293,18 @@
 			if (content.match("班级不存在")) {
 				alert("班级不存在");
 			} else {
+				var line = new Array();
 				var bar = new Array();
-				content = content.substring(1, content.length-1);
+				var s = content.split("|");
+				content = s[0].substring(1, s[0].length-1);
+				var array = content.split(",");
+				for (var i=0; i<array.length; i++) {
+					line[i] = new Array();
+					line[i][0] = parseInt(array[i].split("=")[0]);
+					line[i][1] = parseInt(array[i].split("=")[1]);
+				}
+				
+				content = s[1].substring(1, s[1].length-1);
 				var array = content.split(",");
 				for (var i=0; i<array.length; i++) {
 					bar[i] = new Array();
@@ -302,7 +312,7 @@
 					bar[i][1] = parseInt(array[i].split("=")[1]);
 				}
 				
-				scoreStatistics(bar);
+				scoreStatistics(line, bar);
 			}
 		}
 		function onOpen(event) {
@@ -325,27 +335,19 @@
 			}
 		}
 
-		function scoreStatistics(content) {
+		function scoreStatistics(line, bar) {
 
 			/*
 			 * LINE CHART
 			 * ----------
 			 */
 			//LINE randomly generated data
-			var sin = [], cos = [];
-			for (var i = 0; i < 8; i += 1) {
-				sin.push([ i, i ]);
-				cos.push([ i, i + 5 ]);
-			}
+			
 			var line_data1 = {
-				data : sin,
+				data : line,
 				color : "#3c8dbc"
 			};
-			var line_data2 = {
-				data : cos,
-				color : "#00c0ef"
-			};
-			$.plot("#line-chart", [ line_data1, line_data2 ], {
+			$.plot("#line-chart", [ line_data1 ], {
 				grid : {
 					hoverable : true,
 					borderColor : "#f3f3f3",
@@ -407,7 +409,7 @@
 			 */
 
 			var bar_data = {
-				data : content,
+				data : bar,
 				color : "#3c8dbc"
 			};
 			$.plot("#bar-chart", [ bar_data ], {

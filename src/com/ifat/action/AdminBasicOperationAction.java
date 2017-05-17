@@ -281,45 +281,49 @@ public class AdminBasicOperationAction extends SuperAction implements
 	 * 
 	 * @return
 	 */
-	public TreeMap<String, Integer> scoreStatistics(List<Class> classes) {
+	public String scoreStatistics(List<Class> classes) {
 		TreeMap<String, Integer> studentSocreMap = new TreeMap<String, Integer>();
 		TreeMap<Integer, Integer> questionScoreMap = new TreeMap<Integer, Integer>();
-		
+
 		@SuppressWarnings("unchecked")
 		AdminService adminService = (AdminService) httpSession
 				.getAttribute("adminService");
 
 		String cid = classes.get(0).getId();
 		List<Student> list = adminService.getStudentDAO().findByCid(cid);
-		
+
 		for (Student student : list) {
 			if (student.getScore() == null) {
 				studentSocreMap.put(student.getName(), 0);
 			} else {
 				studentSocreMap.put(student.getName(), student.getScore());
 			}
-			
-			if (student.getEachquestionscore() != null && student.getEachquestionscore() !="") {
-				String[] eachQuestionScore = student.getEachquestionscore().split("\\|");
-				for (int i=0; i<eachQuestionScore.length; i++) {
-					if (questionScoreMap.containsKey(i+1)) {
-						questionScoreMap.put(i+1, questionScoreMap.get(i+1) + Integer.parseInt(eachQuestionScore[i]));
+
+			if (student.getEachquestionscore() != null
+					&& student.getEachquestionscore() != "") {
+				String[] eachQuestionScore = student.getEachquestionscore()
+						.split("\\|");
+				for (int i = 0; i < eachQuestionScore.length; i++) {
+					if (questionScoreMap.containsKey(i + 1)) {
+						questionScoreMap.put(i + 1, questionScoreMap.get(i + 1)
+								+ Integer.parseInt(eachQuestionScore[i]));
 					} else {
-						questionScoreMap.put(i+1, Integer.parseInt(eachQuestionScore[i]));
+						questionScoreMap.put(i + 1,
+								Integer.parseInt(eachQuestionScore[i]));
 					}
 				}
 			}
 		}
-		
-		for (Entry<Integer, Integer> questionScore : questionScoreMap.entrySet()) {
-			questionScoreMap.put(questionScore.getKey(), Math.round(questionScore.getValue()/list.size()));
+
+		for (Entry<Integer, Integer> questionScore : questionScoreMap
+				.entrySet()) {
+			questionScoreMap.put(questionScore.getKey(),
+					Math.round(questionScore.getValue() / list.size()));
 		}
-		
-		System.out.println(questionScoreMap.toString());
-		
-		return studentSocreMap;
+
+		return questionScoreMap.toString() + "|" + studentSocreMap.toString();
+
 	}
-	
 
 	/**
 	 * 接收消息。
@@ -344,7 +348,7 @@ public class AdminBasicOperationAction extends SuperAction implements
 					s.getBasicRemote().sendText("班级不存在");
 
 				} else {
-					s.getBasicRemote().sendObject(
+					s.getBasicRemote().sendText(
 							scoreStatistics((List<Class>) classes));
 				}
 			}
