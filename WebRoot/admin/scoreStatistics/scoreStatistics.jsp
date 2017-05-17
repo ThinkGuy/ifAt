@@ -152,7 +152,7 @@
 									class="fa fa-angle-double-right"></i> 添加班级</a></li>
 						</ul></li>
 					<li><a
-						href="<%=basePath%>admin/scoreStatistics/scoreStatistics.jsp">
+						href="<%=basePath%>Admin/AdminBasicOperation_injectServer.action">
 							<i class="fa fa-calendar"></i> <span>成绩统计</span>
 					</a></li>
 				</ul>
@@ -160,6 +160,8 @@
 			<!-- /.sidebar -->
 		</aside>
 	</div>
+
+
 	<div class="row-offcanvas row-offcanvas-left">
 		<!-- Right side column. Contains the navbar and content of the page -->
 		<aside class="right-side">
@@ -176,6 +178,27 @@
 
 			<!-- Main content -->
 			<section class="content">
+				<div class="row">
+					<div class="col-sm-9 ">
+						<h4 class="page-header">
+							<small>统计该班级的题目准确率以及学生成绩。</small>
+						</h4>
+					</div>
+					<div class="col-sm-3 search-form">
+						<div class="text-right">
+							<div class="input-group">
+								<input type="text" id="searchContent"
+									class="form-control input-sm" placeholder="班级">
+								<div class="input-group-btn">
+									<button type="submit" id="seach" name="q"
+										class="btn btn-sm btn-primary" onclick="sendMessage(this)">
+										<i class="fa fa-search"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<!-- Line chart -->
@@ -236,117 +259,177 @@
 
 	<!-- Page script -->
 	<script type="text/javascript">
-		$(
-				function() {
+		var webSocket = null;
+		var flag = true;//全局标记位，标记浏览器是否支持websocket
+		$(function(event) {
+			if (!window.WebSocket) {
+				$("body").append("<h1>你的浏览器不支持WebSocket</h1>");
+				flag = false;
+				return;
+			}
+			startConnect(event);
+		});
 
-					/*
-					 * LINE CHART
-					 * ----------
-					 */
-					//LINE randomly generated data
-					var sin = [], cos = [];
-					for (var i = 0; i < 8; i += 1) {
-						sin.push([ i, i ]);
-						cos.push([ i, i + 5 ]);
+		function startConnect(event) {
+			if (flag == false) {
+				return;
+			}
+			var url = "ws://localhost:8080/ifAt/ws/websocket/admin";
+			webSocket = new WebSocket(url);
+
+			webSocket.onerror = function(event) {
+				onError(event)
+			};
+			webSocket.onopen = function(event) {
+				onOpen(event)
+			};
+			webSocket.onmessage = function(event) {
+				onMessage(event)
+			};
+
+		}
+		function onMessage(event) {
+			var content = event.data;
+			if (content.match("班级不存在")) {
+				alert("班级不存在");
+			} else {
+				var bar = new Array();
+				content = content.substring(1, content.length-1);
+				var array = content.split(",");
+				for (var i=0; i<array.length; i++) {
+					bar[i] = new Array();
+					bar[i][0] = array[i].split("=")[0];
+					bar[i][1] = parseInt(array[i].split("=")[1]);
+				}
+				
+				scoreStatistics(bar);
+			}
+		}
+		function onOpen(event) {
+			
+		}
+		function onError(event) {
+			$(".infos").append("<li class='red'>连接服务器发生错误</li>");
+		}
+		function sendMessage(obj) {
+			var msg = $("#searchContent").val();
+			
+			var reg = new RegExp("^[0-9]*$");
+			if (!reg.test(msg)) {
+				alert("请输入数字!");
+				return;
+			}
+			
+			if (msg != undefined && msg != "") {
+				webSocket.send(msg);//向服务器发送消息
+			}
+		}
+
+		function scoreStatistics(content) {
+
+			/*
+			 * LINE CHART
+			 * ----------
+			 */
+			//LINE randomly generated data
+			var sin = [], cos = [];
+			for (var i = 0; i < 8; i += 1) {
+				sin.push([ i, i ]);
+				cos.push([ i, i + 5 ]);
+			}
+			var line_data1 = {
+				data : sin,
+				color : "#3c8dbc"
+			};
+			var line_data2 = {
+				data : cos,
+				color : "#00c0ef"
+			};
+			$.plot("#line-chart", [ line_data1, line_data2 ], {
+				grid : {
+					hoverable : true,
+					borderColor : "#f3f3f3",
+					borderWidth : 1,
+					tickColor : "#f3f3f3"
+				},
+				series : {
+					shadowSize : 0,
+					lines : {
+						show : true
+					},
+					points : {
+						show : true
 					}
-					var line_data1 = {
-						data : sin,
-						color : "#3c8dbc"
-					};
-					var line_data2 = {
-						data : cos,
-						color : "#00c0ef"
-					};
-					$.plot("#line-chart", [ line_data1, line_data2 ], {
-						grid : {
-							hoverable : true,
-							borderColor : "#f3f3f3",
-							borderWidth : 1,
-							tickColor : "#f3f3f3"
-						},
-						series : {
-							shadowSize : 0,
-							lines : {
-								show : true
-							},
-							points : {
-								show : true
-							}
-						},
-						lines : {
-							fill : false,
-							color : [ "#3c8dbc", "#f56954" ]
-						},
-						yaxis : {
-							show : true,
-						},
-						xaxis : {
-							show : true
-						}
-					});
-					//Initialize tooltip on hover
-					$(
-							"<div class='tooltip-inner' id='line-chart-tooltip'></div>")
-							.css({
-								position : "absolute",
-								display : "none",
-								opacity : 0.8
-							}).appendTo("body");
-					$("#line-chart")
-							.bind(
-									"plothover",
-									function(event, pos, item) {
+				},
+				lines : {
+					fill : false,
+					color : [ "#3c8dbc", "#f56954" ]
+				},
+				yaxis : {
+					show : true,
+				},
+				xaxis : {
+					show : true
+				}
+			});
+			//Initialize tooltip on hover
+			$("<div class='tooltip-inner' id='line-chart-tooltip'></div>").css(
+					{
+						position : "absolute",
+						display : "none",
+						opacity : 0.8
+					}).appendTo("body");
+			$("#line-chart")
+					.bind(
+							"plothover",
+							function(event, pos, item) {
 
-										if (item) {
-											var x = item.datapoint[0]
-													.toFixed(2), y = item.datapoint[1]
-													.toFixed(2);
+								if (item) {
+									var x = item.datapoint[0].toFixed(2), y = item.datapoint[1]
+											.toFixed(2);
 
-											$("#line-chart-tooltip").html(
-													item.series.label + " of "
-															+ x + " = " + y)
-													.css({
-														top : item.pageY + 5,
-														left : item.pageX + 5
-													}).fadeIn(200);
-										} else {
-											$("#line-chart-tooltip").hide();
-										}
+									$("#line-chart-tooltip").html(
+											item.series.label + " of " + x
+													+ " = " + y).css({
+										top : item.pageY + 5,
+										left : item.pageX + 5
+									}).fadeIn(200);
+								} else {
+									$("#line-chart-tooltip").hide();
+								}
 
-									});
-					/* END LINE CHART */
+							});
+			/* END LINE CHART */
 
-					/*
-					 * BAR CHART
-					 * ---------                 
-					 */
+			/*
+			 * BAR CHART
+			 * ---------                 
+			 */
 
-					var bar_data = {
-						data : [ [ "130801", 20 ], [ "130802", 25 ],
-								[ "130803", 60 ], [ "130804", 50 ],
-								[ "13080", 100 ], [ "130806", 55 ] ],
-						color : "#3c8dbc"
-					};
-					$.plot("#bar-chart", [ bar_data ], {
-						grid : {
-							borderWidth : 1,
-							borderColor : "#f3f3f3",
-							tickColor : "#f3f3f3"
-						},
-						series : {
-							bars : {
-								show : true,
-								barWidth : 0.5,
-								align : "center"
-							}
-						},
-						xaxis : {
-							mode : "categories",
-							tickLength : 0
-						}
-					});
-					/* END BAR CHART */
-				})(jQuery);
+			var bar_data = {
+				data : content,
+				color : "#3c8dbc"
+			};
+			$.plot("#bar-chart", [ bar_data ], {
+				grid : {
+					borderWidth : 1,
+					borderColor : "#f3f3f3",
+					tickColor : "#f3f3f3"
+				},
+				series : {
+					bars : {
+						show : true,
+						barWidth : 0.5,
+						align : "center"
+					}
+				},
+				xaxis : {
+					mode : "categories",
+					tickLength : 0
+				}
+			});
+			/* END BAR CHART */
+		};
 	</script>
 </body>
 

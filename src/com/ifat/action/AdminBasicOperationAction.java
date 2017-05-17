@@ -1,17 +1,48 @@
 package com.ifat.action;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.io.IOException;
+import java.util.Queue;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+import javax.servlet.http.HttpSession;
+import javax.websocket.EncodeException;
+import javax.websocket.EndpointConfig;
+import javax.websocket.OnClose;
+import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
+import javax.websocket.server.ServerEndpoint;
+
+import java.util.List;
+
+import com.ifat.config.GetHttpSessionConfigurator;
+import com.ifat.config.ServerEncoder;
 import com.ifat.model.Admin;
 import com.ifat.model.Class;
 import com.ifat.model.Student;
 import com.ifat.service.AdminService;
 import com.opensymphony.xwork2.ModelDriven;
 
+@ServerEndpoint(value = "/ws/websocket/admin", encoders = { ServerEncoder.class }, configurator = GetHttpSessionConfigurator.class)
 public class AdminBasicOperationAction extends SuperAction implements
 		ModelDriven<Admin> {
 
 	private static final long serialVersionUID = 1L;
 	private Admin admin;
 	private AdminService adminService;
+	private HttpSession httpSession;
+	/**
+	 * 存储当前有效的session对象
+	 */
+	private static Queue<Session> sessionSet = new ConcurrentLinkedQueue<Session>();
+
+	public static Queue<Session> getSessionSet() {
+		return sessionSet;
+	}
 
 	public AdminService getAdminService() {
 		return adminService;
@@ -117,10 +148,10 @@ public class AdminBasicOperationAction extends SuperAction implements
 		if (session.getAttribute("adminId") == null) {
 			return "LoginNotYet";
 		}
-		
-		
+
 		session.setAttribute("cid", request.getParameter("cid"));
-		request.setAttribute("questionnaireList", adminService.getQuestionnaireDAO().findAll());
+		request.setAttribute("questionnaireList", adminService
+				.getQuestionnaireDAO().findAll());
 		request.setAttribute("Info", "试卷如下,请选择:");
 
 		return "displayOfferQuestionnaireSuccess";
@@ -138,7 +169,7 @@ public class AdminBasicOperationAction extends SuperAction implements
 
 		String cid = session.getAttribute("cid").toString();
 		String qid = request.getParameter("qid");
-		
+
 		adminService.dealwithOfferQuestionnaire(cid, qid);
 
 		return "offerQuestionnaireSuccess";
@@ -225,6 +256,107 @@ public class AdminBasicOperationAction extends SuperAction implements
 		request.setAttribute("studentList", adminService.getStudentDAO()
 				.findAll());
 		return "deleteStudentSuccess";
+	}
+
+	/**
+	 * 注入session server.
+	 * 
+	 * @return
+	 */
+	public String injectServer() {
+		if (session.getAttribute("adminId") == null) {
+			return "LoginNotYet";
+		}
+		session.setAttribute("adminService", adminService);
+
+		return "injectServerSuccess";
+	}
+
+	/**
+	 * 成绩统计。
+	 * 
+	 * @return
+	 */
+	public TreeMap<String, Integer> scoreStatistics(List<Class> classes) {
+		TreeMap<String, Integer> map = new TreeMap<String, Integer>();
+		@SuppressWarnings("unchecked")
+		AdminService adminService = (AdminService) httpSession
+				.getAttribute("adminService");
+
+		String cid = classes.get(0).getId();
+		List<Student> list = adminService.getStudentDAO().findByCid(cid);
+
+		for (Student student : list) {
+			if (student.getScore() == null) {
+				map.put(student.getName(), 0);
+			} else {
+				map.put(student.getName(), student.getScore());
+			}
+
+		}
+
+		return map;
+	}
+
+	/**
+	 * 接收消息。
+	 * 
+	 * @param message
+	 * @param currentSession
+	 * @throws EncodeException
+	 */
+	@OnMessage
+	public void onMessage(String message, Session currentSession)
+			throws EncodeException {
+		try {
+			final Set<Session> sessions = currentSession.getOpenSessions();
+
+			for (Session s : sessions) {
+
+				@SuppressWarnings("unchecked")
+				AdminService adminService = (AdminService) httpSession
+						.getAttribute("adminService");
+				List classes = adminService.getClassDAO().findByName(message);
+				if (classes.size() == 0) {
+					s.getBasicRemote().sendText("班级不存在");
+
+				} else {
+					s.getBasicRemote().sendObject(
+							scoreStatistics((List<Class>) classes));
+				}
+
+				String string = "[ [ \"130801\", 20 ], [ \"130802\", 25 ], [ \"130803\", 60 ], [ \"130804\", 50 ], [ \"13080\", 100 ], [ \"130806\", 55 ] ]";
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 打开连接。
+	 * 
+	 * @param currentSession
+	 */
+	@OnOpen
+	public void onOpen(Session currentSession, EndpointConfig config) {
+		httpSession = (HttpSession) config.getUserProperties().get(
+				HttpSession.class.getName());
+
+		if (sessionSet.contains(currentSession) == false) {
+			sessionSet.add(currentSession);
+		}
+	}
+
+	/**
+	 * 关闭连接。
+	 * 
+	 * @param currentSession
+	 */
+	@OnClose
+	public void onClose(Session currentSession) {
+		if (sessionSet.contains(currentSession)) {
+			sessionSet.remove(currentSession);
+		}
 	}
 
 	@Override

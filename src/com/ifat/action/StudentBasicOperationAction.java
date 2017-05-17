@@ -14,15 +14,11 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
-import org.hibernate.ejb.criteria.expression.function.AggregationFunction.COUNT;
-
 import com.ifat.config.GetHttpSessionConfigurator;
 import com.ifat.model.Question;
 import com.ifat.model.Student;
 import com.ifat.service.StudentService;
 import com.opensymphony.xwork2.ModelDriven;
-import com.sun.mail.util.QEncoderStream;
 
 @ServerEndpoint(value = "/ws/websocket", configurator = GetHttpSessionConfigurator.class)
 public class StudentBasicOperationAction extends SuperAction implements
@@ -31,9 +27,9 @@ public class StudentBasicOperationAction extends SuperAction implements
 	/**
 	 * 每道题的初始分数。
 	 */
-	public static final int PERSCORE = 4; 
+	public static final int PERSCORE = 4;
 	public static final int DECSCORE = 1;
-	
+
 	private static final long serialVersionUID = 1L;
 	private Student student;
 	private StudentService studentService;
@@ -76,7 +72,7 @@ public class StudentBasicOperationAction extends SuperAction implements
 					.toLowerCase();
 		}
 		Question question = questions.get(tag - 1);
-		
+
 		int times = question.getTimes();
 		String result = "";
 
@@ -87,14 +83,14 @@ public class StudentBasicOperationAction extends SuperAction implements
 			} else if (times == 1) {
 				question.setScore(PERSCORE - DECSCORE);
 			} else if (times == 2) {
-				question.setScore(PERSCORE - 2*DECSCORE);
+				question.setScore(PERSCORE - 2 * DECSCORE);
 			} else if (times == 3) {
-				question.setScore(PERSCORE -3*DECSCORE);
+				question.setScore(PERSCORE - 3 * DECSCORE);
 			}
-			
+
 			question.setTimes(++times);
-			result = message + " 第" + (times) + "次答题正确，得"
-					+ question.getScore() + "分";
+			result = message + " 第" + (times) + "次答题正确，得" + question.getScore()
+					+ "分";
 		} else {
 			question.setTimes(++times);
 			result = message + " 答案错误,请继续答题";
@@ -180,7 +176,7 @@ public class StudentBasicOperationAction extends SuperAction implements
 		if (session.getAttribute("studentId") == null) {
 			return "LoginNotYet";
 		}
-		
+
 		student.setCid(session.getAttribute("studentId").toString());
 
 		ArrayList<Question> questions = studentService
@@ -189,16 +185,17 @@ public class StudentBasicOperationAction extends SuperAction implements
 		session.setAttribute("questionList", questions);
 		return "displayQuestionnaireSuccess";
 	}
-	
+
 	/**
 	 * 统计分数。
+	 * 
 	 * @return
 	 */
 	public String countScore() {
 		if (session.getAttribute("studentId") == null) {
 			return "LoginNotYet";
 		}
-		
+
 		int firstRightNum = 0;
 		int secondRightNum = 0;
 		int thirdRightNum = 0;
@@ -207,43 +204,50 @@ public class StudentBasicOperationAction extends SuperAction implements
 		double accuracy = 0;
 		int times = 0;
 		int qscore = 0;
-		
-		ArrayList<Question> questions = (ArrayList<Question>)session.getAttribute("questionList");
-		
+
+		ArrayList<Question> questions = (ArrayList<Question>) session
+				.getAttribute("questionList");
+
 		for (Question question : questions) {
 			qscore = question.getScore();
 			if (qscore == 0) {
 				continue;
 			}
-			
+
 			times = question.getTimes();
 			if (times == 1) {
-				firstRightNum ++;
+				firstRightNum++;
 			} else if (times == 2) {
-				secondRightNum ++;
+				secondRightNum++;
 			} else if (times == 3) {
-				thirdRightNum ++;
-			} else if (times == 4){
-				fourthRightNum ++;
-			} 
-			
+				thirdRightNum++;
+			} else if (times == 4) {
+				fourthRightNum++;
+			}
+
 			score = score + qscore;
 		}
-		
-		accuracy = score/(double)(questions.size()*PERSCORE)*100;
-		
+
+		accuracy = score / (double) (questions.size() * PERSCORE) * 100;
+
 		request.setAttribute("firstRightNum", firstRightNum);
 		request.setAttribute("secondRightNum", secondRightNum);
 		request.setAttribute("thirdRightNum", thirdRightNum);
 		request.setAttribute("fourthRightNum", fourthRightNum);
 		request.setAttribute("score", score);
 		request.setAttribute("accuracy", accuracy);
+
+		Student student = studentService.getStudentDAO().findById(
+				session.getAttribute("studentId").toString());
+		student.setScore(score);
+		studentService.getStudentDAO().merge(student);
 		
 		return "countScoreSuccess";
 	}
-	
+
 	/**
 	 * 退出登录。
+	 * 
 	 * @return
 	 */
 	public String logout() {

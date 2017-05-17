@@ -1,4 +1,4 @@
-package com.ifat.service;
+package com.ifat.config;
 
 import java.util.Random;
 

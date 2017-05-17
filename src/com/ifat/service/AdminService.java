@@ -3,6 +3,7 @@ package com.ifat.service;
 import java.util.List;
 import java.util.UUID;
 
+import com.ifat.config.PassWordCreate;
 import com.ifat.dao.AdminDAO;
 import com.ifat.dao.ClassDAO;
 import com.ifat.dao.ClassQuestionnaireDAO;

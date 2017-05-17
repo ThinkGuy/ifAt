@@ -130,7 +130,7 @@
 									class="fa fa-angle-double-right"></i> 添加班级</a></li>
 						</ul></li>
 					<li><a
-						href="<%=basePath%>admin/scoreStatistics/scoreStatistics.jsp">
+						href="<%=basePath%>Admin/AdminBasicOperation_injectServer.action">
 							<i class="fa fa-calendar"></i> <span>成绩统计</span>
 					</a></li>
 				</ul>

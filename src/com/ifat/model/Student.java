@@ -12,6 +12,7 @@ public class Student implements java.io.Serializable {
 	private String cid;
 	private String name;
 	private String password;
+	private Integer score;
 
 	// Constructors
 
@@ -25,11 +26,13 @@ public class Student implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Student(String id, String cid, String name, String password) {
+	public Student(String id, String cid, String name, String password,
+			Integer score) {
 		this.id = id;
 		this.cid = cid;
 		this.name = name;
 		this.password = password;
+		this.score = score;
 	}
 
 	// Property accessors
@@ -64,6 +67,14 @@ public class Student implements java.io.Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Integer getScore() {
+		return this.score;
+	}
+
+	public void setScore(Integer score) {
+		this.score = score;
 	}
 
 }
