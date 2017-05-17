@@ -166,6 +166,9 @@
 	<script src="<%=basePath%>js/plugins/iCheck/icheck.min.js"
 		type="text/javascript"></script>
 	<!-- Page script -->
+	<head>
+
+</head>
 	<script type="text/javascript">
 		$(function() {
 			//iCheck for checkbox and radio inputs
@@ -201,7 +204,13 @@
 			}
 
 		});
-
+		
+		function fresh(event) {
+			startConnect(event)
+ 		};
+ 		//每3分钟刷新一次
+ 		var freshTool = window.setInterval("fresh()",180000);
+	
 		function startAnswer(event) {
 			startConnect(event);
 		}
@@ -266,6 +275,8 @@
 			}
 		}
 		function countScore(event) {
+			//关闭刷新器。
+			window.clearInterval(freshTool); 
 			webSocket.onclose = function(event) {
 			
 			};
