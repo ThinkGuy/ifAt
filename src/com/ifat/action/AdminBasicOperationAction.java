@@ -320,6 +320,12 @@ public class AdminBasicOperationAction extends SuperAction implements
 			questionScoreMap.put(questionScore.getKey(),
 					Math.round(questionScore.getValue() / list.size()));
 		}
+		
+		if (questionScoreMap.size() == 0) {
+			for (int i=1; i<11; i++) {
+				questionScoreMap.put(i, 0);
+			}
+		}
 
 		return questionScoreMap.toString() + "|" + studentSocreMap.toString();
 
