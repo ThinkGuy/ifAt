@@ -22,11 +22,11 @@
 <link rel="stylesheet" href="<%=basePath%>css/animate.css">
 <link rel="stylesheet" href="<%=basePath%>css/font-awesome.min.css">
 <link rel="stylesheet" href="<%=basePath%>css/templatemo-style.css">
+<link rel="stylesheet" href="<%=basePath%>css/endTime/media.css">
 
 <!-- jQuery -->
 <script src="<%=basePath%>js/jquery-1.11.0.min.js"></script>
 <script src="<%=basePath%>js/jquery-migrate-1.2.1.min.js"></script>
-
 </head>
 <body>
 	<!-- HEADER -->
@@ -58,17 +58,13 @@
 	<div class="main-content">
 		<div class="fluid-container">
 			<div class="section-welcome">
+			<div class="row">
+			<div class="digits col-md-12 col-sm-offset-4"></div></div>
 				<div class="row">
-					<div class="col-md-3 text-center">
-						<img src="<%=basePath%>img/portfolio/5.jpg"
-							class="img-responsive animated fadeInLeft"
-							alt="Time is happiness">
-					</div>
-					<div class="col-md-8 text-center welcome-section">
+					<div class="col-md-12 text-center welcome-section">
 						<br>
 						<h2 class="animated fadeInDown">${session.studentName},欢迎你使用if-at</h2>
 						<br>
-						<p class="animated fadeInRight">还有30分钟</p>
 						<br>
 						<button class="animated fadeInUp btn btn-warning btn-lg" id="answer"
 							onclick="startAnswer()">开始答题</button>
@@ -166,9 +162,7 @@
 	<script src="<%=basePath%>js/plugins/iCheck/icheck.min.js"
 		type="text/javascript"></script>
 	<!-- Page script -->
-	<head>
-
-</head>
+	
 	<script type="text/javascript">
 		$(function() {
 			//iCheck for checkbox and radio inputs
@@ -192,7 +186,9 @@
 					});
 		});
 	</script>
-
+	<!-- 倒计时时钟 -->
+	<script src="<%=basePath%>js/jquery.min.js"></script>
+	<script src="<%=basePath%>js/endTime/jquery.countdown.js"></script>
 	<script type="text/javascript">
 		var webSocket = null;
 		var flag = true;//全局标记位，标记浏览器是否支持websocket
@@ -205,6 +201,20 @@
 
 		});
 		
+		function endTime(){
+		var times = 1000*60*15; //倒计时。
+		var endTimes=new Date();
+   		endTimes.setTime(new Date().getTime() + times);//设置倒计时15分钟。
+      	
+        $(".digits").countdown({
+          image: "<%=basePath%>img/digits.png",
+          format: "mm:ss",
+          endTime: endTimes
+        });
+        
+        setTimeout('countScore()', times); //到点自动提交试卷。
+      }
+		
 		function fresh(event) {
 			startConnect(event)
  		};
@@ -212,6 +222,7 @@
  		var freshTool = window.setInterval("fresh()",180000);
 	
 		function startAnswer(event) {
+			endTime();
 			startConnect(event);
 		}
 
@@ -283,6 +294,5 @@
 			self.location="<%=basePath%>Student/StudentBasicOperation_countScore.action";
 		}
 	</script>
-
 </body>
 </html>
