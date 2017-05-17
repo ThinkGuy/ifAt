@@ -16,7 +16,7 @@ import com.ifat.model.ClassQuestionnaire;
 import com.ifat.model.Questionnaire;
 
 public class QuestionnaireService {
-	
+
 	private QuestionnaireDAO questionnaireDAO;
 	private ClassQuestionnaireDAO classQuestionnaireDAO;
 
@@ -28,12 +28,13 @@ public class QuestionnaireService {
 	}
 
 	/**
-	 * @param questionnaireDAO the questionnaireDAO to set
+	 * @param questionnaireDAO
+	 *            the questionnaireDAO to set
 	 */
 	public void setQuestionnaireDAO(QuestionnaireDAO questionnaireDAO) {
 		this.questionnaireDAO = questionnaireDAO;
 	}
-	
+
 	/**
 	 * @return the classQuestionnaireDAO
 	 */
@@ -42,67 +43,79 @@ public class QuestionnaireService {
 	}
 
 	/**
-	 * @param classQuestionnaireDAO the classQuestionnaireDAO to set
+	 * @param classQuestionnaireDAO
+	 *            the classQuestionnaireDAO to set
 	 */
-	public void setClassQuestionnaireDAO(ClassQuestionnaireDAO classQuestionnaireDAO) {
+	public void setClassQuestionnaireDAO(
+			ClassQuestionnaireDAO classQuestionnaireDAO) {
 		this.classQuestionnaireDAO = classQuestionnaireDAO;
 	}
 
 	/**
 	 * 添加试卷。
+	 * 
 	 * @param questionnaire
 	 * @return
 	 */
 	public String dealWithAddQuestionnaire(Questionnaire questionnaire) {
 		String q = questionnaire.getQuestionnaire();
-		if (isGoodJson(q) && q.indexOf(":")>0) {
+		if (isGoodJson(q) && q.indexOf(":") > 0) {
+			if (questionnaireDAO.findByName(questionnaire.getName()).size() > 0) {
+				return "试卷名已存在！请重输：";
+			}
 			questionnaire.setId(UUID.randomUUID().toString());
 			questionnaireDAO.save(questionnaire);
 			return "addQuestionnaireSuccess";
 		}
-		
-		return "addQuestionnaireFiled";
+
+		return "试卷格式错误， 添加失败！";
 	}
-	
+
 	/**
 	 * 修改试卷。
+	 * 
 	 * @param questionnaire
 	 * @return
 	 */
 	public String dealWithChangeQuestionnaire(Questionnaire questionnaire) {
 		String q = questionnaire.getQuestionnaire();
-		if (isGoodJson(q) && q.indexOf(":")>0) {
-			
-			if (questionnaireDAO.findByName(questionnaire.getName()).size() > 0) {
+		if (isGoodJson(q) && q.indexOf(":") > 0) {
+
+			ArrayList<Questionnaire> qList = (ArrayList<Questionnaire>) questionnaireDAO
+					.findByName(questionnaire.getName());
+			if (qList.size() > 0
+					&& qList.get(0).getId().equals(questionnaire.getId())) {
 				return "试卷名已存在！请重输：";
 			}
 			questionnaireDAO.merge(questionnaire);
 			return "changeQuestionnaireSuccess";
-		} 
-		
+		}
+
 		return "试卷格式错误， 添加失败！";
 	}
-	
+
 	/**
 	 * 判断是否json格式。
+	 * 
 	 * @param json
 	 * @return
 	 */
-	public static boolean isGoodJson(String json) {    
-	    if (StringUtils.isBlank(json)) {    
-	        return false;    
-	    }    
-	    try {    
-	    	 JsonParser jsonParser = new JsonParser();  
-	         JsonElement jsonElement =  jsonParser.parse(json); 
-	        return true;    
-	    } catch (JsonParseException e) {    
-	        return false;    
-	    }    
-	}  
-	
+	public static boolean isGoodJson(String json) {
+		if (StringUtils.isBlank(json)) {
+			return false;
+		}
+		try {
+			JsonParser jsonParser = new JsonParser();
+			JsonElement jsonElement = jsonParser.parse(json);
+			return true;
+		} catch (JsonParseException e) {
+			return false;
+		}
+	}
+
 	/**
 	 * 试卷删除。
+	 * 
 	 * @return
 	 */
 	public String dealWithDeleteQuestionnaire(Questionnaire questionnaire) {

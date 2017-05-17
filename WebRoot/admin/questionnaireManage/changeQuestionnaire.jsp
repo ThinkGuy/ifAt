@@ -33,7 +33,7 @@
 							<center>
 								<h3>修改试卷</h3>
 							</center>
-							<input type="hidden" name="sid" id="sid" value="${request.id}"> 
+							<input type="hidden" name="cqid" id="cqid" value="${request.cqid}"> 
 							<hr class="star-primary">
 							<div class="form-group">
 								<label for="Password">试卷名:</label> <input class="form-control"

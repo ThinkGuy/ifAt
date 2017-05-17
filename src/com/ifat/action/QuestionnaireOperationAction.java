@@ -40,7 +40,8 @@ public class QuestionnaireOperationAction extends SuperAction implements
 			return "addQuestionnaireSuccess";
 		}
 
-		request.setAttribute("info", "试卷格式错误， 添加失败！");
+		request.setAttribute("info",
+				questionnaireService.dealWithAddQuestionnaire(questionnaire));
 		return "addQuestionnaireFaild";
 	}
 
@@ -54,8 +55,8 @@ public class QuestionnaireOperationAction extends SuperAction implements
 			return "LoginNotYet";
 		}
 		
-		if (session.getAttribute("chqid") == null) {
-			session.setAttribute("chqid", request.getParameter("sid").toString());
+		if (session.getAttribute("cqid") == null) {
+			session.setAttribute("cqid", request.getParameter("cqid").toString());
 		} 
 		System.out.println(request.getParameter("sid"));
 		questionnaire.setId(session.getAttribute("sid").toString());
@@ -65,7 +66,7 @@ public class QuestionnaireOperationAction extends SuperAction implements
 					.getQuestionnaireDAO().findAll());
 			request.setAttribute("Info", "试卷： " + questionnaire.getName()
 					+ ",修改成功!");
-			session.setAttribute("chqid", null);
+			session.setAttribute("cqid", null);
 			return "changeQuestionnaireSuccess";
 		}
 
