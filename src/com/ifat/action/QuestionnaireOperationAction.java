@@ -45,6 +45,37 @@ public class QuestionnaireOperationAction extends SuperAction implements
 	}
 
 	/**
+	 * 修改试卷。
+	 * 
+	 * @return
+	 */
+	public String changeQuestionnaire() {
+		if (session.getAttribute("adminId") == null) {
+			return "LoginNotYet";
+		}
+		
+		if (session.getAttribute("chqid") == null) {
+			session.setAttribute("chqid", request.getParameter("sid").toString());
+		} 
+		System.out.println(request.getParameter("sid"));
+		questionnaire.setId(session.getAttribute("sid").toString());
+		if ("addQuestionnaireSuccess".equals(questionnaireService
+				.dealWithChangeQuestionnaire(questionnaire))) {
+			request.setAttribute("questionnaireList", questionnaireService
+					.getQuestionnaireDAO().findAll());
+			request.setAttribute("Info", "试卷： " + questionnaire.getName()
+					+ ",修改成功!");
+			session.setAttribute("chqid", null);
+			return "changeQuestionnaireSuccess";
+		}
+
+		request.setAttribute("info",
+				questionnaireService.dealWithChangeQuestionnaire(questionnaire));
+		return "changeQuestionnaireFaild";
+
+	}
+
+	/**
 	 * 显示全部试卷。
 	 * 
 	 * @return

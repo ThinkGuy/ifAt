@@ -65,6 +65,25 @@ public class QuestionnaireService {
 	}
 	
 	/**
+	 * 修改试卷。
+	 * @param questionnaire
+	 * @return
+	 */
+	public String dealWithChangeQuestionnaire(Questionnaire questionnaire) {
+		String q = questionnaire.getQuestionnaire();
+		if (isGoodJson(q) && q.indexOf(":")>0) {
+			
+			if (questionnaireDAO.findByName(questionnaire.getName()).size() > 0) {
+				return "试卷名已存在！请重输：";
+			}
+			questionnaireDAO.merge(questionnaire);
+			return "changeQuestionnaireSuccess";
+		} 
+		
+		return "试卷格式错误， 添加失败！";
+	}
+	
+	/**
 	 * 判断是否json格式。
 	 * @param json
 	 * @return

@@ -47,7 +47,7 @@
 												<td><button class="btn btn-info btn-sm"
 														onclick="window.location.href='<%=basePath%>/Admin/QuestionnaireOperation_deleteQuestionnaire.action?id=${questionnaire.id}'">删除</button>
 													<button class="btn btn-info btn-sm"
-														onclick="window.location.href='#'">修改</button></td>
+														onclick="window.location.href='<%=basePath%>admin/questionnaireManage/changeQuestionnaire.jsp?cqid=${questionnaire.id}'">修改</button></td>
 											</tr>
 										</c:forEach>
 									</tbody>
