@@ -1,4 +1,5 @@
 package com.ifat.model;
+// default package
 
 /**
  * Student entity. @author MyEclipse Persistence Tools
@@ -13,6 +14,7 @@ public class Student implements java.io.Serializable {
 	private String name;
 	private String password;
 	private Integer score;
+	private String eachquestionscore;
 
 	// Constructors
 
@@ -27,12 +29,13 @@ public class Student implements java.io.Serializable {
 
 	/** full constructor */
 	public Student(String id, String cid, String name, String password,
-			Integer score) {
+			Integer score, String eachquestionscore) {
 		this.id = id;
 		this.cid = cid;
 		this.name = name;
 		this.password = password;
 		this.score = score;
+		this.eachquestionscore = eachquestionscore;
 	}
 
 	// Property accessors
@@ -75,6 +78,14 @@ public class Student implements java.io.Serializable {
 
 	public void setScore(Integer score) {
 		this.score = score;
+	}
+
+	public String getEachquestionscore() {
+		return this.eachquestionscore;
+	}
+
+	public void setEachquestionscore(String eachquestionscore) {
+		this.eachquestionscore = eachquestionscore;
 	}
 
 }

@@ -204,12 +204,15 @@ public class StudentBasicOperationAction extends SuperAction implements
 		double accuracy = 0;
 		int times = 0;
 		int qscore = 0;
+		StringBuilder eachQuestionScore = new StringBuilder();
 
 		ArrayList<Question> questions = (ArrayList<Question>) session
 				.getAttribute("questionList");
 
 		for (Question question : questions) {
 			qscore = question.getScore();
+			eachQuestionScore.append(Math.round(qscore*100/(double)PERSCORE));
+			eachQuestionScore.append("|");
 			if (qscore == 0) {
 				continue;
 			}
@@ -224,7 +227,7 @@ public class StudentBasicOperationAction extends SuperAction implements
 			} else if (times == 4) {
 				fourthRightNum++;
 			}
-
+			
 			score = score + qscore;
 		}
 
@@ -240,6 +243,8 @@ public class StudentBasicOperationAction extends SuperAction implements
 		Student student = studentService.getStudentDAO().findById(
 				session.getAttribute("studentId").toString());
 		student.setScore(score);
+		String eachScore = eachQuestionScore.toString().substring(0, eachQuestionScore.length()-1);
+		student.setEachquestionscore(eachScore);
 		studentService.getStudentDAO().merge(student);
 		
 		return "countScoreSuccess";

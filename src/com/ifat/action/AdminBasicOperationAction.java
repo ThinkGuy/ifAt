@@ -2,7 +2,9 @@ package com.ifat.action;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import java.io.IOException;
+import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.Set;
 import java.util.TreeMap;
@@ -16,6 +18,8 @@ import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
+
+import org.omg.CORBA.PUBLIC_MEMBER;
 
 import java.util.List;
 
@@ -273,30 +277,49 @@ public class AdminBasicOperationAction extends SuperAction implements
 	}
 
 	/**
-	 * 成绩统计。
+	 * 学生成绩统计。
 	 * 
 	 * @return
 	 */
 	public TreeMap<String, Integer> scoreStatistics(List<Class> classes) {
-		TreeMap<String, Integer> map = new TreeMap<String, Integer>();
+		TreeMap<String, Integer> studentSocreMap = new TreeMap<String, Integer>();
+		TreeMap<Integer, Integer> questionScoreMap = new TreeMap<Integer, Integer>();
+		
 		@SuppressWarnings("unchecked")
 		AdminService adminService = (AdminService) httpSession
 				.getAttribute("adminService");
 
 		String cid = classes.get(0).getId();
 		List<Student> list = adminService.getStudentDAO().findByCid(cid);
-
+		
 		for (Student student : list) {
 			if (student.getScore() == null) {
-				map.put(student.getName(), 0);
+				studentSocreMap.put(student.getName(), 0);
 			} else {
-				map.put(student.getName(), student.getScore());
+				studentSocreMap.put(student.getName(), student.getScore());
 			}
-
+			
+			if (student.getEachquestionscore() != null && student.getEachquestionscore() !="") {
+				String[] eachQuestionScore = student.getEachquestionscore().split("\\|");
+				for (int i=0; i<eachQuestionScore.length; i++) {
+					if (questionScoreMap.containsKey(i+1)) {
+						questionScoreMap.put(i+1, questionScoreMap.get(i+1) + Integer.parseInt(eachQuestionScore[i]));
+					} else {
+						questionScoreMap.put(i+1, Integer.parseInt(eachQuestionScore[i]));
+					}
+				}
+			}
 		}
-
-		return map;
+		
+		for (Entry<Integer, Integer> questionScore : questionScoreMap.entrySet()) {
+			questionScoreMap.put(questionScore.getKey(), Math.round(questionScore.getValue()/list.size()));
+		}
+		
+		System.out.println(questionScoreMap.toString());
+		
+		return studentSocreMap;
 	}
+	
 
 	/**
 	 * 接收消息。
@@ -324,8 +347,6 @@ public class AdminBasicOperationAction extends SuperAction implements
 					s.getBasicRemote().sendObject(
 							scoreStatistics((List<Class>) classes));
 				}
-
-				String string = "[ [ \"130801\", 20 ], [ \"130802\", 25 ], [ \"130803\", 60 ], [ \"130804\", 50 ], [ \"13080\", 100 ], [ \"130806\", 55 ] ]";
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -20,5 +20,8 @@
         <property name="score" type="java.lang.Integer">
             <column name="score" />
         </property>
+        <property name="eachquestionscore" type="java.lang.String">
+            <column name="eachquestionscore" length="65535" />
+        </property>
     </class>
 </hibernate-mapping>
