@@ -37,7 +37,6 @@
 										<tr>
 											<th>姓名</th>
 											<th>密码</th>
-											<th>班级</th>
 											<th>操作</th>
 										</tr>
 									</thead>
@@ -46,7 +45,6 @@
 											<tr>
 												<td>${student.name}</td>
 												<td>${student.password}</td>
-												<td>${request.className}</td>
 												<td><button class="btn btn-info btn-sm"
 														onclick="window.location.href='<%=basePath%>Admin/AdminBasicOperation_deleteStudent.action?sid=${student.id}'">删除</button></td>
 											</tr>
@@ -56,7 +54,6 @@
 										<tr>
 											<th>姓名</th>
 											<th>密码</th>
-											<th>班级</th>
 											<th>操作</th>
 										</tr>
 									</tfoot>
