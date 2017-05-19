@@ -144,7 +144,7 @@
 					</div>
 					<div class="col-md-6 col-sm-6 col-xs-12 padding-right-0">
 						<ul class="social">
-							<li><a href="#"><i class="fa fa-weibo"></i> 微博</a></li>
+							<li><a href="http://weibo.com/577207799"><i class="fa fa-weibo"></i> 微博</a></li>
 							<li><a href="#"><i class="fa fa-facebook"></i> Facebook</a></li>
 						</ul>
 					</div>
