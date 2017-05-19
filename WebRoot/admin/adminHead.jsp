@@ -65,7 +65,7 @@
 <script src="<%=basePath%>js/bootstrap.min.js" type="text/javascript"></script>
 <!-- Morris.js charts -->
 <script
-	src="<%=basePath%>//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+	src="<%=basePath%>raphael-min.js"></script>
 <script src="<%=basePath%>js/plugins/morris/morris.min.js"
 	type="text/javascript"></script>
 <!-- Sparkline -->
