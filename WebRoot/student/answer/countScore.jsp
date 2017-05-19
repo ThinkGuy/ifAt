@@ -162,8 +162,8 @@
 					<div class="col-md-6 col-sm-6 col-xs-12 padding-left-0">
 						<p class="copyright">
 							Copyright &copy; 2017 Author Name | Liu Xinwei <a
-								href="http://www.cssmoban.com/" target="_blank" title="模板之家"><br>if-at</a>
-							- Collect from <a href="http://www.cssmoban.com/" title="网页模板"
+								href="#" target="_blank" title="刘鑫伟"><br>if-at</a>
+							- Collect from <a href="#" title="刘鑫伟"
 								target="_blank">if-at</a>
 						</p>
 					</div>
