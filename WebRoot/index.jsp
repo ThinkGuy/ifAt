@@ -47,7 +47,8 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-					<img class="img-responsive" src="<%=basePath%>img/profile.png" alt="">
+					<img class="img-responsive" src="<%=basePath%>img/profile.png"
+						alt="">
 					<div class="intro-text">
 						<span class="name">if-at</span>
 						<hr class="star-light">
