@@ -13,7 +13,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, minimal-ui">
 <meta charset="utf-8">
-<title>Modest - Free Web Template</title>
+<title>ifAt结果统计</title>
 <!-- Theme style -->
 <link href="<%=basePath%>css/AdminLTE.css" rel="stylesheet"
 	type="text/css" />
