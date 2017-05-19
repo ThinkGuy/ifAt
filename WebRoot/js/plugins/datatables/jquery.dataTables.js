@@ -9275,7 +9275,7 @@
 			 * variables are all dynamically replaced as the table display updates, and 
 			 * can be freely moved or removed as the language requirements change.
 			 *  @type string
-			 *  @default Showing _START_ to _END_ of _TOTAL_ entries
+			 *  @default _START_ to _END_ of _TOTAL_
 			 *  @dtopt Language
 			 * 
 			 *  @example
@@ -9287,14 +9287,14 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfo": "Showing _START_ to _END_ of _TOTAL_ entries",
+			"sInfo": "_START_ to _END_ of _TOTAL_",
 		
 		
 			/**
 			 * Display information string for when the table is empty. Typically the 
 			 * format of this string should match sInfo.
 			 *  @type string
-			 *  @default Showing 0 to 0 of 0 entries
+			 *  @default 0 to 0 of 0
 			 *  @dtopt Language
 			 * 
 			 *  @example
@@ -9306,7 +9306,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfoEmpty": "Showing 0 to 0 of 0 entries",
+			"sInfoEmpty": "0 to 0 of 0",
 		
 		
 			/**
@@ -9326,7 +9326,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfoFiltered": "(filtered from _MAX_ total entries)",
+			"sInfoFiltered": "(_MAX_ total)",
 		
 		
 			/**

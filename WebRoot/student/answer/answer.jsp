@@ -186,7 +186,6 @@
 		});
 	</script>
 	<!-- 倒计时时钟 -->
-	<script src="<%=basePath%>js/jquery.min.js"></script>
 	<script src="<%=basePath%>js/endTime/jquery.countdown.js"></script>
 	<script type="text/javascript">
 		var webSocket = null;
@@ -229,7 +228,7 @@
 			if (flag == false) {
 				return;
 			}
-			var url = "ws://localhost:8080/ifAt/ws/websocket";
+			var url = "ws://192.168.199.234:8080/ifAt/ws/websocket";
 			webSocket = new WebSocket(url);
 
 			webSocket.onerror = function(event) {
