@@ -321,11 +321,7 @@
 		function sendMessage(obj) {
 			var msg = $("#searchContent").val();
 			
-			var reg = new RegExp("^[0-9]*$");
-			if (!reg.test(msg)) {
-				alert("请输入数字!");
-				return;
-			}
+			
 			
 			if (msg != undefined && msg != "") {
 				webSocket.send(msg);//向服务器发送消息
