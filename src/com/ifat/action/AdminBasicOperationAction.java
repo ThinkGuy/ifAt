@@ -195,8 +195,8 @@ public class AdminBasicOperationAction extends SuperAction implements
 
 		String cid = session.getAttribute("cid").toString();
 		String qid = request.getParameter("qid");
-
 		adminService.dealwithOfferQuestionnaire(cid, qid);
+		request.setAttribute("classList", adminService.getClassDAO().findAll());
 		request.setAttribute("Info", "班级-绑定成功");
 		return "offerQuestionnaireSuccess";
 	}

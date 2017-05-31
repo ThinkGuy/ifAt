@@ -15,6 +15,7 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 import com.ifat.config.GetHttpSessionConfigurator;
+import com.ifat.config.PassWordCreate;
 import com.ifat.model.Question;
 import com.ifat.model.Student;
 import com.ifat.service.StudentService;
@@ -205,7 +206,8 @@ public class StudentBasicOperationAction extends SuperAction implements
 
 		for (Question question : questions) {
 			qscore = question.getScore();
-			eachQuestionScore.append(Math.round(qscore*100/(double)PERSCORE));
+			eachQuestionScore.append(Math.round(qscore * 100
+					/ (double) PERSCORE));
 			eachQuestionScore.append("|");
 			if (qscore == 0) {
 				continue;
@@ -221,7 +223,7 @@ public class StudentBasicOperationAction extends SuperAction implements
 			} else if (times == 4) {
 				fourthRightNum++;
 			}
-			
+
 			score = score + qscore;
 		}
 
@@ -237,8 +239,10 @@ public class StudentBasicOperationAction extends SuperAction implements
 		Student student = studentService.getStudentDAO().findById(
 				session.getAttribute("studentId").toString());
 		student.setScore(score);
-		String eachScore = eachQuestionScore.toString().substring(0, eachQuestionScore.length()-1);
+		String eachScore = eachQuestionScore.toString().substring(0,
+				eachQuestionScore.length() - 1);
 		student.setEachquestionscore(eachScore);
+		student.setPassword(new PassWordCreate().createPassWord(9));
 		studentService.getStudentDAO().merge(student);
 		
 		return "countScoreSuccess";
@@ -254,6 +258,7 @@ public class StudentBasicOperationAction extends SuperAction implements
 			session.setAttribute("studentId", null);
 			session.setAttribute("studentName", null);
 			session.setAttribute("questionList", null);
+
 		}
 
 		return "logout";

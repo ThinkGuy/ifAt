@@ -235,7 +235,11 @@ public class AdminService {
 			student = new Student();
 			student.setId(UUID.randomUUID().toString());
 			student.setCid(c.getId());
-			student.setName(c.getName() + 0 + i);
+			if (i < 10) {
+				student.setName(c.getName() + 0 + i);
+			} else {
+				student.setName(c.getName() + i);
+			}
 			student.setPassword(new PassWordCreate().createPassWord(9));
 			studentDAO.merge(student);
 			i++;
