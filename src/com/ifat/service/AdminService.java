@@ -32,6 +32,7 @@ public class AdminService {
 	private QuestionnaireDAO questionnaireDAO;
 	private ClassQuestionnaireDAO classQuestionnaireDAO;
 	
+	public static final int CLASSSTUDENTNUM = 30;
 	/**
 	 * @return the adminDAO
 	 */
@@ -230,7 +231,7 @@ public class AdminService {
 		//自动添加学生账号。
 		Student student;
 		int i = 0;
-		while (i < 15) {
+		while (i < CLASSSTUDENTNUM) {
 			student = new Student();
 			student.setId(UUID.randomUUID().toString());
 			student.setCid(c.getId());
@@ -252,6 +253,7 @@ public class AdminService {
 		classDAO.delete(c);
 		//删除班级下的所有学生。
 		studentDAO.deleteByClassId(cid);
+		classQuestionnaireDAO.deleteByClassId(cid);
 		return "班级：" + c.getName() + "已被删除";
 	}
 	

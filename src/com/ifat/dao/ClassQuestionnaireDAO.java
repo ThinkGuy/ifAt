@@ -85,6 +85,22 @@ public class ClassQuestionnaireDAO {
 			throw re;
 		}
 	}
+	
+	public void deleteByClassId(String cid) {
+		try {
+			Session session = sessionFactory.openSession();
+			Transaction tx = session.beginTransaction();
+			String hqlDelete = "delete from ClassQuestionnaire where cid = :cid";
+			int deletedEntities = session.createQuery(hqlDelete)
+			.setString("cid", cid)
+			.executeUpdate();
+			tx.commit();
+			session.close();
+		} catch (RuntimeException re) {
+			log.error("delete by property cid failed", re);
+			throw re;
+		}
+	}
 
 	public ClassQuestionnaire findById(java.lang.String id) {
 		log.debug("getting ClassQuestionnaire instance with id: " + id);

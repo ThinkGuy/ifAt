@@ -190,7 +190,7 @@ public class AdminBasicOperationAction extends SuperAction implements
 		String qid = request.getParameter("qid");
 
 		adminService.dealwithOfferQuestionnaire(cid, qid);
-
+		request.setAttribute("Info", "班级-绑定成功");
 		return "offerQuestionnaireSuccess";
 	}
 

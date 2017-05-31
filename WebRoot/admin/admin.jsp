@@ -96,9 +96,6 @@
 				<!-- /.search form -->
 				<!-- sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu">
-					<li class="active"><a href="#"> <i class="fa fa-dashboard"></i>
-							<span>个人信息</span>
-					</a></li>
 					<li><a
 						href="<%=basePath%>admin/basicOperation/changePassword.jsp"> <i
 							class="fa fa-th"></i> <span>密码修改</span> <small

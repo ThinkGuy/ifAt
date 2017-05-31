@@ -19,7 +19,7 @@
 			<result name="displayClasses">/admin/classManage/classManage.jsp</result>
 			<result name="deleteClassSuccess">/admin/classManage/classManage.jsp</result>
 			<result name="displayOfferQuestionnaireSuccess">/admin/classManage/chooseQuestionnaire.jsp</result>
-			<result name="offerQuestionnaireSuccess">/admin/classManage/offerQuestionnaire.jsp</result>
+			<result name="offerQuestionnaireSuccess">/admin/classManage/classManage.jsp</result>
 			<!-- 学生管理 -->
 			<result name="searchStudentsByClassSuccess">/admin/classManage/addClassSuccess.jsp</result>
 			<result name="displayStudentsSuccess">/admin/studentManage/studentManage.jsp</result>
