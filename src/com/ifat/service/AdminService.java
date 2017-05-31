@@ -181,7 +181,7 @@ public class AdminService {
 	 * @return
 	 */
 	public boolean judgePasswordEqual(String sPassword, String tPassword) {
-		tPassword = encryptByMd5AndRandomNum(tPassword);
+		tPassword = encryptByMd5(tPassword);
 		
 		int i = 0;
 		while (i<10) {
