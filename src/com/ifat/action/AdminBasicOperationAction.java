@@ -4,6 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.Set;
@@ -73,19 +77,22 @@ public class AdminBasicOperationAction extends SuperAction implements
 		request.setAttribute("info", adminService.dealWithLogin(admin));
 		return "loginFailed";
 	}
-	
+
 	/**
 	 * 管理员注册。
+	 * 
 	 * @return
 	 */
 	public String register() {
 		String confirmpwd = request.getParameter("confirmpwd");
-		if ("registerSuccess".equals(adminService.dealWithRegister(admin, confirmpwd))) {
+		if ("registerSuccess".equals(adminService.dealWithRegister(admin,
+				confirmpwd))) {
 			session.setAttribute("info", "注册成功，请登录");
 			return "registerSuccess";
 		}
 
-		request.setAttribute("info", adminService.dealWithRegister(admin, confirmpwd));
+		request.setAttribute("info",
+				adminService.dealWithRegister(admin, confirmpwd));
 		return "registerFailed";
 	}
 
@@ -297,8 +304,8 @@ public class AdminBasicOperationAction extends SuperAction implements
 	 * @return
 	 */
 	public String scoreStatistics(List<Class> classes) {
-		TreeMap<String, Integer> studentSocreMap = new TreeMap<String, Integer>();
-		TreeMap<Integer, Integer> questionScoreMap = new TreeMap<Integer, Integer>();
+		Map<String, Integer> studentSocreMap = new TreeMap<String, Integer>();
+		Map<Integer, Integer> questionScoreMap = new TreeMap<Integer, Integer>();
 
 		@SuppressWarnings("unchecked")
 		AdminService adminService = (AdminService) httpSession
@@ -335,14 +342,33 @@ public class AdminBasicOperationAction extends SuperAction implements
 			questionScoreMap.put(questionScore.getKey(),
 					Math.round(questionScore.getValue() / list.size()));
 		}
-		
+
 		if (questionScoreMap.size() == 0) {
-			for (int i=1; i<11; i++) {
+			for (int i = 1; i < 11; i++) {
 				questionScoreMap.put(i, 0);
 			}
 		}
 
-		return questionScoreMap.toString() + "|" + studentSocreMap.toString();
+		//对学生成绩进行降序排序。
+		List<Entry<String, Integer>> studentScoreList = new ArrayList<Entry<String, Integer>>(
+				studentSocreMap.entrySet());
+
+		Collections.sort(studentScoreList,
+				new Comparator<Map.Entry<String, Integer>>() {
+					// 升序排序
+					public int compare(Entry<String, Integer> o1,
+							Entry<String, Integer> o2) {
+						return o2.getValue().compareTo(o1.getValue());
+					}
+				});
+		
+		String studentScore = "{";
+		for (Entry<String, Integer> entry : studentScoreList) {
+			studentScore = studentScore + entry.getKey() + "=" +entry.getValue()+", ";
+		}
+		studentScore = studentScore.substring(0, studentScore.length()-1) + "}";
+		
+		return questionScoreMap.toString() + "|" + studentScore;
 
 	}
 
