@@ -133,18 +133,19 @@ public class AdminService {
 			return "用户名已存在,请重新输入用户名";
 		}  
 
-		Random random = new Random();
 		admin.setId(UUID.randomUUID().toString());
-		admin.setPassword(encryptByMd5AndRandomNum(confirmpwd) + random.nextInt(9));
+		admin.setPassword(encryptByMd5AndRandomNum(confirmpwd));
 		adminDAO.save(admin);
 		
 		return "registerSuccess";
 	}
 	
 	/**
-	 * MD5随机数加密。
+	 * MD5加密。
+	 * @param target
+	 * @return
 	 */
-	public String encryptByMd5AndRandomNum(String target) {
+	public String encryptByMd5(String target) {
 		String result = null; 
 		try { 
 		      MessageDigest md5 = MessageDigest.getInstance("MD5"); 
@@ -163,6 +164,14 @@ public class AdminService {
 		    } 
 		
 		return result;
+	}
+	
+	/**
+	 * MD5随机数加密。
+	 */
+	public String encryptByMd5AndRandomNum(String target) {
+		Random random = new Random();
+		return encryptByMd5(target) + random.nextInt(9);
 	}
 	
 	/**
