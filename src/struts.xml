@@ -6,6 +6,8 @@
 			<!-- 管理员操作 -->
 			<result name="loginSuccess">/admin/admin.jsp</result>
 			<result name="loginFailed">/admin/basicOperation/login.jsp</result>
+			<result name="regiterSuccess">/admin/basicOperation/login.jsp</result>
+			<result name="regiterFailed">/admin/basicOperation/regiter.jsp</result>
 			<result name="LoginNotYet">/admin/basicOperation/login.jsp</result>
 			<result name="logout">/index.jsp</result>
 			<result name="changePasswordSuccess">/admin/basicOperation/changePasswordSuccess.jsp

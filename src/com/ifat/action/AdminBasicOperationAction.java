@@ -73,6 +73,21 @@ public class AdminBasicOperationAction extends SuperAction implements
 		request.setAttribute("info", adminService.dealWithLogin(admin));
 		return "loginFailed";
 	}
+	
+	/**
+	 * 管理员注册。
+	 * @return
+	 */
+	public String register() {
+		String confirmpwd = request.getParameter("confirmpwd");
+		if ("registerSuccess".equals(adminService.dealWithRegister(admin, confirmpwd))) {
+			session.setAttribute("info", "注册成功，请登录");
+			return "registerSuccess";
+		}
+
+		request.setAttribute("info", adminService.dealWithRegister(admin, confirmpwd));
+		return "registerFailed";
+	}
 
 	/**
 	 * 修改管理员密码。

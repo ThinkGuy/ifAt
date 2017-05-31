@@ -35,7 +35,7 @@
 								alt="User Image" />
 								<p>
 									${session.adminName} - Web Developer <small>Member
-										since Nov. 2012</small>
+										since Nov. 2017</small>
 								</p></li>
 							<!-- Menu Body -->
 							<li class="user-body">

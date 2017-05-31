@@ -21,14 +21,6 @@
 			</button>
 			<a class="navbar-brand" href="<%=basePath%>index.jsp">if-at</a>
 		</div>
-		<div class="collapse navbar-collapse"
-			id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav navbar-right">
-				<li class="hidden"><a href="#page-top"></a></li>
-				<li class="page-scroll"><a
-					href="<%=basePath%>admin/basicOperation/register.jsp">管理员注册</a></li>
-			</ul>
-		</div>
 	</div>
 	<!-- /.container-fluid --> </nav>
 	<header>
@@ -36,14 +28,16 @@
 		<div class="row clearfix">
 			<div class="col-md-4 col-md-offset-4 column">
 				<form class="form-signin" role="form"
-					action="<%=basePath%>Admin/AdminBasicOperation_login.action"
+					action="<%=basePath%>Admin/AdminBasicOperation_register.action"
 					method="post">
-					<h3 class="form-signin-heading">管理员登录</h3>
+					<h3 class="form-signin-heading">管理员注册</h3>
 					<hr class="star-primary">
 					<input class="form-control" placeholder="账号名" required=""
-						autofocus="" type="text" name="name"> <br> <input
-						class="form-control" placeholder="密码" required="" type="password"
-						name="password">
+						autofocus="" type="text" name="name"> <br>
+					<input class="form-control" placeholder="密码" required=""
+						type="password" name="password"> <br>
+					<input class="form-control" placeholder="密码确认" required=""
+						type=password name="confirmpwd">
 					<div class="pull-left checkbox">
 						<label> <input value="remember-me" type="checkbox">
 							记住我
@@ -52,7 +46,7 @@
 					<div class="row clearfix">
 						<div class="pull-right col-md-12">${request.info}</div>
 					</div>
-					<button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+					<button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
 				</form>
 			</div>
 		</div>

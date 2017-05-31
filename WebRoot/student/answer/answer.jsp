@@ -228,7 +228,7 @@
 			if (flag == false) {
 				return;
 			}
-			var url = "ws://192.168.43.87:8080/ifAt/ws/websocket";
+			var url = "ws://localhost:8080/ifAt/ws/websocket";
 			webSocket = new WebSocket(url);
 
 			webSocket.onerror = function(event) {
