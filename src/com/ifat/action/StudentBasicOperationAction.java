@@ -167,22 +167,17 @@ public class StudentBasicOperationAction extends SuperAction implements
 	}
 
 	/**
-	 * 显示试卷
+	 * 用户登录显示试卷.
 	 * 
 	 * @return
 	 */
-	public String displayQuestionnaire() {
-		if (session.getAttribute("studentId") == null) {
-			return "LoginNotYet";
-		}
-
+	public void displayQuestionnaire() {
 		student.setCid(session.getAttribute("studentId").toString());
 
 		ArrayList<Question> questions = studentService
 				.dealWithDisplayQuestionnaire(student);
 		request.setAttribute("questionList", questions);
 		session.setAttribute("questionList", questions);
-		return "displayQuestionnaireSuccess";
 	}
 
 	/**

@@ -91,10 +91,11 @@ public class StudentService {
 		student = studentDAO.findById(student.getId());
 		
 		ClassQuestionnaire classQuestionnaire = null;
-		if (classQuestionnaireDAO.findByCid(student.getCid()).size() > 0) {
-			classQuestionnaire = (ClassQuestionnaire) classQuestionnaireDAO.findByCid(student.getCid()).get(0);
-		}
+		if (classQuestionnaireDAO.findByCid(student.getCid()).size() ==  0) {
+			return new ArrayList<Question>(0);
+		} 
 		
+		classQuestionnaire = (ClassQuestionnaire) classQuestionnaireDAO.findByCid(student.getCid()).get(0);
 		Questionnaire questionnaire = questionnaireDAO.findById(classQuestionnaire.getQid());
 		String questionJson = questionnaire.getQuestionnaire().trim();
 		return dealWithQuestionJson(questionJson);
