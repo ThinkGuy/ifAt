@@ -1,5 +1,7 @@
 package com.ifat.model;
 
+import java.util.ArrayList;
+
 public class Question {
 	
 	private String title;

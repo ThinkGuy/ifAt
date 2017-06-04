@@ -2,8 +2,11 @@ package com.ifat.action;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +16,8 @@ import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
+
+import org.w3c.dom.ls.LSException;
 
 import com.ifat.config.GetHttpSessionConfigurator;
 import com.ifat.config.PassWordCreate;
@@ -29,7 +34,7 @@ public class StudentBasicOperationAction extends SuperAction implements
 	 * 每道题的初始分数。
 	 */
 	public static final int PERSCORE = 4;
-	public static final int DECSCORE = 1;
+	public static final int DECSCORE = PERSCORE/4;
 
 	private static final long serialVersionUID = 1L;
 	private Student student;
@@ -142,6 +147,8 @@ public class StudentBasicOperationAction extends SuperAction implements
 	 */
 	@OnClose
 	public void onClose(Session currentSession) {
+		countScore();
+		
 		if (sessionSet.contains(currentSession)) {
 			sessionSet.remove(currentSession);
 		}
@@ -158,12 +165,13 @@ public class StudentBasicOperationAction extends SuperAction implements
 					.findByName(student.getName()).get(0);
 			session.setAttribute("studentId", student.getId());
 			session.setAttribute("studentName", student.getName());
+			session.setAttribute("studentService", studentService);
 			displayQuestionnaire();
 			return "studentLoginSuccess";
 		}
 
 		request.setAttribute("info", studentService.dealWithLogin(student));
-
+		
 		return "studentLoginFailed";
 	}
 
@@ -174,11 +182,28 @@ public class StudentBasicOperationAction extends SuperAction implements
 	 */
 	public void displayQuestionnaire() {
 		student.setCid(session.getAttribute("studentId").toString());
-
-		ArrayList<Question> questions = studentService
+		
+		Map<Integer, Integer> questionScoreMap = new TreeMap<Integer, Integer>();
+		ArrayList<Question> questionList = studentService
 				.dealWithDisplayQuestionnaire(student);
-		request.setAttribute("questionList", questions);
-		session.setAttribute("questionList", questions);
+		ArrayList<Question> questions = new ArrayList<Question>();
+		
+		student = studentService.getStudentDAO().findById(session.getAttribute("studentId").toString());
+		if (student.getEachquestionscore() != null
+				&& student.getEachquestionscore() != "") {
+			String[] eachQuestionScore = student.getEachquestionscore()
+					.split("\\|");
+			for (int i = 0; i < eachQuestionScore.length; i++) {
+				if (Integer.parseInt(eachQuestionScore[i]) == 0) {
+					questions.add(questionList.get(i));
+				}
+			}
+			request.setAttribute("questionList", questions);
+			session.setAttribute("questionList", questions);
+			return;
+		} 
+		request.setAttribute("questionList", questionList);
+		session.setAttribute("questionList", questionList);
 	}
 
 	/**
@@ -187,7 +212,13 @@ public class StudentBasicOperationAction extends SuperAction implements
 	 * @return
 	 */
 	public String countScore() {
-		if (session.getAttribute("studentId") == null) {
+		int tag = 0;
+		if (session == null && httpSession != null) {
+			session = httpSession;
+			studentService = (StudentService) session.getAttribute("studentService");
+			//中途退出。
+			tag = 1;
+		} else if (session.getAttribute("studentId") == null) {
 			return "LoginNotYet";
 		}
 
@@ -201,13 +232,43 @@ public class StudentBasicOperationAction extends SuperAction implements
 		int qscore = 0;
 		StringBuilder eachQuestionScore = new StringBuilder();
 
-		ArrayList<Question> questions = (ArrayList<Question>) session
-				.getAttribute("questionList");
-
+		ArrayList<Question> questions = new ArrayList<Question>();
+		ArrayList<Question> questionList = (ArrayList<Question>) session.getAttribute("questionList");
+		Student student = studentService.getStudentDAO().findById(
+				session.getAttribute("studentId").toString());
+		if (student.getEachquestionscore() != null
+				&& student.getEachquestionscore() != "") {
+			String[] eachQuestionScores = student.getEachquestionscore()
+					.split("\\|");
+			int j =0;
+			Question question = new Question();
+			for (int i = 0; i < eachQuestionScores.length; i++) {
+				if (Integer.parseInt(eachQuestionScores[i]) == 0) {
+					questions.add(questionList.get(j));
+					j ++;
+				} else {
+					int s = Integer.parseInt(eachQuestionScores[i]);
+					question = new Question();
+					question.setScore(s);
+					if (s == PERSCORE) {
+						question.setTimes(1);
+					} else if (s == PERSCORE - DECSCORE) {
+						question.setTimes(2);
+					} else if (s == PERSCORE - 2*DECSCORE) {
+						question.setTimes(3);
+					} else {
+						question.setTimes(4);
+					} 
+					questions.add(question);
+				}
+			}
+		} else {
+			questions = questionList;
+		}
+		
 		for (Question question : questions) {
 			qscore = question.getScore();
-			eachQuestionScore.append(Math.round(qscore * 100
-					/ (double) PERSCORE));
+			eachQuestionScore.append(qscore);
 			eachQuestionScore.append("|");
 			if (qscore == 0) {
 				continue;
@@ -229,15 +290,15 @@ public class StudentBasicOperationAction extends SuperAction implements
 
 		accuracy = score / (double) (questions.size() * PERSCORE) * 100;
 
-		request.setAttribute("firstRightNum", firstRightNum);
-		request.setAttribute("secondRightNum", secondRightNum);
-		request.setAttribute("thirdRightNum", thirdRightNum);
-		request.setAttribute("fourthRightNum", fourthRightNum);
-		request.setAttribute("score", score);
-		request.setAttribute("accuracy", accuracy);
+		if (tag == 0) {
+			request.setAttribute("firstRightNum", firstRightNum);
+			request.setAttribute("secondRightNum", secondRightNum);
+			request.setAttribute("thirdRightNum", thirdRightNum);
+			request.setAttribute("fourthRightNum", fourthRightNum);
+			request.setAttribute("score", score);
+			request.setAttribute("accuracy", accuracy);
+		}
 
-		Student student = studentService.getStudentDAO().findById(
-				session.getAttribute("studentId").toString());
 		student.setScore(score);
 		String eachScore = eachQuestionScore.toString().substring(0,
 				eachQuestionScore.length() - 1);
