@@ -1,8 +1,5 @@
 package com.ifat.action;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,8 +20,6 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
-
 import java.util.List;
 
 import com.ifat.config.GetHttpSessionConfigurator;
@@ -35,6 +30,11 @@ import com.ifat.model.Student;
 import com.ifat.service.AdminService;
 import com.opensymphony.xwork2.ModelDriven;
 
+/**
+ * 管理员Action。
+ * @author lxw
+ *
+ */
 @ServerEndpoint(value = "/ws/websocket/admin", encoders = { ServerEncoder.class }, configurator = GetHttpSessionConfigurator.class)
 public class AdminBasicOperationAction extends SuperAction implements
 		ModelDriven<Admin> {

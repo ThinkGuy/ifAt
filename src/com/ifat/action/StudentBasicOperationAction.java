@@ -2,7 +2,6 @@ package com.ifat.action;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
@@ -17,10 +16,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-import org.w3c.dom.ls.LSException;
-
 import com.ifat.config.GetHttpSessionConfigurator;
-import com.ifat.config.PassWordCreate;
 import com.ifat.model.ClassQuestionnaire;
 import com.ifat.model.Question;
 import com.ifat.model.Questionnaire;
@@ -28,6 +24,11 @@ import com.ifat.model.Student;
 import com.ifat.service.StudentService;
 import com.opensymphony.xwork2.ModelDriven;
 
+/**
+ * 班级Action。
+ * @author lxw
+ *
+ */
 @ServerEndpoint(value = "/ws/websocket", configurator = GetHttpSessionConfigurator.class)
 public class StudentBasicOperationAction extends SuperAction implements
 		ModelDriven<Student> {

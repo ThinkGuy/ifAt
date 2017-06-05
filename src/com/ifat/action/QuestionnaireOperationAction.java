@@ -1,10 +1,14 @@
 package com.ifat.action;
 
-import com.ifat.dao.QuestionnaireDAO;
 import com.ifat.model.Questionnaire;
 import com.ifat.service.QuestionnaireService;
 import com.opensymphony.xwork2.ModelDriven;
 
+/**
+ * 试卷Action。
+ * @author lxw
+ *
+ */
 public class QuestionnaireOperationAction extends SuperAction implements
 		ModelDriven<Questionnaire> {
 

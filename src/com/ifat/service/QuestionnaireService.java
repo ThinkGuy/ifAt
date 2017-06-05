@@ -2,19 +2,19 @@ package com.ifat.service;
 
 import java.util.ArrayList;
 import java.util.UUID;
-
 import org.apache.commons.lang.StringUtils;
-
-import antlr.collections.List;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.ifat.dao.ClassQuestionnaireDAO;
 import com.ifat.dao.QuestionnaireDAO;
-import com.ifat.model.ClassQuestionnaire;
 import com.ifat.model.Questionnaire;
 
+/**
+ * 试卷service。
+ * @author lxw
+ *
+ */
 public class QuestionnaireService {
 
 	private QuestionnaireDAO questionnaireDAO;

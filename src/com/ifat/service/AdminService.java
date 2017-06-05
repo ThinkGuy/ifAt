@@ -16,7 +16,6 @@ import com.ifat.model.Admin;
 import com.ifat.model.Class;
 import com.ifat.model.ClassQuestionnaire;
 import com.ifat.model.Student;
-import com.sun.mail.handlers.image_gif;
 
 /**
  * AdminService.

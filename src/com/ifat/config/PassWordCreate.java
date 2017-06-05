@@ -2,6 +2,11 @@ package com.ifat.config;
 
 import java.util.Random;
 
+/**
+ * 随机密码。
+ * @author lxw
+ *
+ */
 public class PassWordCreate {
 	/**
 	 * 获得密码
