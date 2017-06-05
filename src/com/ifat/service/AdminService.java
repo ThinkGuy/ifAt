@@ -210,7 +210,7 @@ public class AdminService {
 		}
 		
 		admin = adminDAO.findById(admin.getId());
-		admin.setPassword(chPassword);
+		admin.setPassword(encryptByMd5AndRandomNum(chPassword));
 		adminDAO.merge(admin);
 		return "changePasswordSuccess";
 	}

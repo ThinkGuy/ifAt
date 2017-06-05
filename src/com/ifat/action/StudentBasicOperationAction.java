@@ -115,8 +115,7 @@ public class StudentBasicOperationAction extends SuperAction implements
 	@OnMessage
 	public void onMessage(String message, Session currentSession) {
 		// 未登录连接。
-		if (httpSession.getAttribute("studentName") == null) {
-			System.out.println("1");
+		if (httpSession.getAttribute("studentName") == null || "exit".equals(httpSession.getAttribute("studentName").toString())) {
 			return;
 		}
 
@@ -153,11 +152,16 @@ public class StudentBasicOperationAction extends SuperAction implements
 	 */
 	@OnClose
 	public void onClose(Session currentSession) {
+		if (httpSession.getAttribute("studentName") == null) {
+			httpSession.setAttribute("studentName", "exit");
+			session = httpSession;
+		}
+
 		if (httpSession.getAttribute("studentId") != null) {
 			exitSave();
-			httpSession.removeAttribute("studentName");
+			httpSession.setAttribute("studentName", null);
 		}
-		
+
 		if (sessionSet.contains(currentSession)) {
 			sessionSet.remove(currentSession);
 		}
@@ -175,14 +179,14 @@ public class StudentBasicOperationAction extends SuperAction implements
 			session.setAttribute("studentId", student.getId());
 			session.setAttribute("studentName", student.getName());
 			session.setAttribute("studentService", studentService);
-			
+
 			String loginResult = displayQuestionnaire();
 			if ("OK".equals(loginResult)) {
 				return "studentLoginSuccess";
 			}
-			
+
 			return loginResult;
-			
+
 		}
 
 		request.setAttribute("info", studentService.dealWithLogin(student));
@@ -207,12 +211,7 @@ public class StudentBasicOperationAction extends SuperAction implements
 				session.getAttribute("studentId").toString());
 		if (student.getEachquestionscore() != null
 				&& student.getEachquestionscore() != "") {
-			
-			if (student.getScore() != 0) {
-				session.setAttribute("questionList", questionList);
-				return countScore();
-			}
-			
+
 			String[] eachQuestionScore = student.getEachquestionscore().split(
 					"\\|");
 			for (int i = 0; i < eachQuestionScore.length; i++) {
@@ -222,6 +221,13 @@ public class StudentBasicOperationAction extends SuperAction implements
 			}
 			request.setAttribute("questionList", questions);
 			session.setAttribute("questionList", questions);
+
+			if (student.getScore() != null && student.getScore() > 0) {
+				session.setAttribute("questionList", questions);
+				exitSave();
+				return countScore();
+			}
+
 			return "OK";
 		}
 		request.setAttribute("questionList", questionList);
@@ -235,11 +241,18 @@ public class StudentBasicOperationAction extends SuperAction implements
 	 * @return
 	 */
 	public String countScore() {
+		System.out.println(session.getAttribute("studentName"));
 		if (session == null && httpSession != null) {
+			if (httpSession.getAttribute("studentName") == null) {
+				return "LoginNotYet";
+			}
 			session = httpSession;
 			studentService = (StudentService) session
 					.getAttribute("studentService");
-		} else if (session.getAttribute("studentId") == null) {
+		} else if (session.getAttribute("studentId") == null
+				|| (session.getAttribute("studentName") != null && "exit"
+						.equals(session.getAttribute("studentName").toString()))) {
+			request.setAttribute("info", "中断答题，请重新登录");
 			return "LoginNotYet";
 		}
 
@@ -250,6 +263,59 @@ public class StudentBasicOperationAction extends SuperAction implements
 		int score = 0;
 		double accuracy = 0;
 		int times = 0;
+		int qscore = 0;
+		StringBuilder eachQuestionScore = new StringBuilder();
+
+		ArrayList<Question> questions = (ArrayList<Question>) session
+				.getAttribute("questions");
+		Student student = studentService.getStudentDAO().findById(
+				session.getAttribute("studentId").toString());
+
+		for (Question question : questions) {
+			qscore = question.getScore();
+			if (qscore == 0) {
+				continue;
+			}
+
+			times = question.getTimes();
+			if (times == 1) {
+				firstRightNum++;
+			} else if (times == 2) {
+				secondRightNum++;
+			} else if (times == 3) {
+				thirdRightNum++;
+			} else if (times == 4) {
+				fourthRightNum++;
+			}
+
+			score = score + qscore;
+		}
+
+		accuracy = score / (double) (questions.size() * PERSCORE) * 100;
+		request.setAttribute("firstRightNum", firstRightNum);
+		request.setAttribute("secondRightNum", secondRightNum);
+		request.setAttribute("thirdRightNum", thirdRightNum);
+		request.setAttribute("fourthRightNum", fourthRightNum);
+		request.setAttribute("score", score);
+		request.setAttribute("accuracy", accuracy);
+
+		student.setScore(score);
+		studentService.getStudentDAO().merge(student);
+
+		return "countScoreSuccess";
+	}
+
+	/**
+	 *  
+	 */
+	public void exitSave() {
+		if (session == null && httpSession != null) {
+			session = httpSession;
+			studentService = (StudentService) session
+					.getAttribute("studentService");
+
+		}
+
 		int qscore = 0;
 		StringBuilder eachQuestionScore = new StringBuilder();
 
@@ -296,95 +362,18 @@ public class StudentBasicOperationAction extends SuperAction implements
 				continue;
 			}
 
-			times = question.getTimes();
-			if (times == 1) {
-				firstRightNum++;
-			} else if (times == 2) {
-				secondRightNum++;
-			} else if (times == 3) {
-				thirdRightNum++;
-			} else if (times == 4) {
-				fourthRightNum++;
-			}
-
-			score = score + qscore;
-		}
-
-		accuracy = score / (double) (questions.size() * PERSCORE) * 100;
-
-		request.setAttribute("firstRightNum", firstRightNum);
-		request.setAttribute("secondRightNum", secondRightNum);
-		request.setAttribute("thirdRightNum", thirdRightNum);
-		request.setAttribute("fourthRightNum", fourthRightNum);
-		request.setAttribute("score", score);
-		request.setAttribute("accuracy", accuracy);
-
-		student.setScore(score);
-		String eachScore = eachQuestionScore.toString().substring(0,
-				eachQuestionScore.length() - 1);
-		student.setEachquestionscore(eachScore);
-		studentService.getStudentDAO().merge(student);
-
-		return "countScoreSuccess";
-	}
-	
-	/**
-	 *  
-	 */
-	public void exitSave() {
-		if (session == null && httpSession != null) {
-			session = httpSession;
-			studentService = (StudentService) session
-					.getAttribute("studentService");
-		
-		}
-
-		int score = 0;
-		int times = 0;
-		int qscore = 0;
-		StringBuilder eachQuestionScore = new StringBuilder();
-
-		ArrayList<Question> questions = new ArrayList<Question>();
-		ArrayList<Question> questionList = (ArrayList<Question>) session
-				.getAttribute("questionList");
-		Student student = studentService.getStudentDAO().findById(
-				session.getAttribute("studentId").toString());
-		if (student.getEachquestionscore() != null
-				&& student.getEachquestionscore() != "") {
-			String[] eachQuestionScores = student.getEachquestionscore().split(
-					"\\|");
-			int j = 0;
-			Question question = new Question();
-			for (int i = 0; i < eachQuestionScores.length; i++) {
-				if (Integer.parseInt(eachQuestionScores[i]) == 0) {
-					questions.add(questionList.get(j));
-					j++;
-				} else {
-					int s = Integer.parseInt(eachQuestionScores[i]);
-					question = new Question();
-					question.setScore(s);
-					questions.add(question);
-				}
-			}
-		} else {
-			questions = questionList;
-		}
-
-		for (Question question : questions) {
-			qscore = question.getScore();
-			eachQuestionScore.append(qscore);
-			eachQuestionScore.append("|");
-			if (qscore == 0) {
-				continue;
-			}
-
-			score = score + qscore;
 		}
 
 		String eachScore = eachQuestionScore.toString().substring(0,
 				eachQuestionScore.length() - 1);
 		student.setEachquestionscore(eachScore);
 		studentService.getStudentDAO().merge(student);
+
+		if (httpSession != null) {
+			httpSession.setAttribute("questions", questions);
+		} else if (session != null) {
+			session.setAttribute("questions", questions);
+		}
 	}
 
 	/**
@@ -396,13 +385,13 @@ public class StudentBasicOperationAction extends SuperAction implements
 		if (httpSession != null) {
 			httpSession = null;
 		}
-		
+
 		if (session != null) {
 			session.setAttribute("studentId", null);
 			session.setAttribute("studentName", null);
 			session.setAttribute("questionList", null);
 		}
-		
+
 		return "logout";
 	}
 
