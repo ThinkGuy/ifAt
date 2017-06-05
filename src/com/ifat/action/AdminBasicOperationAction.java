@@ -340,7 +340,7 @@ public class AdminBasicOperationAction extends SuperAction implements
 		for (Entry<Integer, Integer> questionScore : questionScoreMap
 				.entrySet()) {
 			questionScoreMap.put(questionScore.getKey(),
-					Math.round(questionScore.getValue() / list.size()));
+					Math.round(questionScore.getValue()*100 / (list.size()*4)));
 		}
 
 		if (questionScoreMap.size() == 0) {
