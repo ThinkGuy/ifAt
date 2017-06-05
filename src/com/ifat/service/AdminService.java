@@ -280,6 +280,13 @@ public class AdminService {
 		classQuestionnaire.setCid(cid);
 		classQuestionnaire.setQid(qid);
 		classQuestionnaireDAO.save(classQuestionnaire);
+		
+		List<Student> students = studentDAO.findByCid(cid);
+		for (Student student : students) {
+			student.setEachquestionscore(null);
+			studentDAO.merge(student);
+		}
+		
 		return "分配成功";
 	}
 	

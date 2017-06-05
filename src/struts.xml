@@ -14,7 +14,7 @@
 			</result>
 			<result name="changePasswordFailed">/admin/basicOperation/changePassword.jsp</result>
 			<!-- 班级管理  -->
-			<result name="addClassSuccess">/admin/classManage/addClassSuccess.jsp</result>
+			<result name="addClassSuccess">/admin/classManage/classManage.jsp</result>
 			<result name="addClassFailed">/admin/classManage/addClass.jsp</result>
 			<result name="displayClasses">/admin/classManage/classManage.jsp</result>
 			<result name="deleteClassSuccess">/admin/classManage/classManage.jsp</result>

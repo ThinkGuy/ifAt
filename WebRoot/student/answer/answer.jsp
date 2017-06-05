@@ -257,6 +257,10 @@
 				$("#" + footer).append(
 						"</br><a style='color:red'> <Strong>&nbsp;" + content
 								+ "</Strong></a>");
+			} else if (content.match("请重新登录，继续答题")){
+				$("#" + footer).append(
+						"</br><a style='color:red'> <Strong>&nbsp;" + content
+								+ "</Strong></a>");
 			} else {
 				$("#q" + tag).prop("disabled", true);
 				$("#" + aid).prop("style", "color:blue");

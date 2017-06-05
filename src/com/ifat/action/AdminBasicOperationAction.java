@@ -152,11 +152,10 @@ public class AdminBasicOperationAction extends SuperAction implements
 		if ("addClassSuccess".equals(adminService.dealWithAddClass(c))) {
 			c = (Class) adminService.getClassDAO().findByName(c.getName())
 					.get(0);
-			request.setAttribute("studentList", adminService.getStudentDAO()
-					.findByCid(c.getId()));
-			request.setAttribute("className", c.getName());
+			
+			request.setAttribute("classList", adminService.getClassDAO().findAll());
 			request.setAttribute("Info", "班级" + c.getName()
-					+ "添加成功，并同时为您自动生成了如下学生账号、密码");
+					+ "添加成功");
 			return "addClassSuccess";
 		}
 
