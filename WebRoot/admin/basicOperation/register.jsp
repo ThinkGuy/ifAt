@@ -37,7 +37,9 @@
 					<input class="form-control" placeholder="密码" required=""
 						type="password" name="password"> <br>
 					<input class="form-control" placeholder="密码确认" required=""
-						type=password name="confirmpwd">
+						type=password name="confirmpwd"> <br>
+						<input class="form-control" placeholder="注册码" required=""
+						type="text" name=registerCode>
 					<div class="pull-left checkbox">
 						<label> <input value="remember-me" type="checkbox">
 							记住我

@@ -85,14 +85,15 @@ public class AdminBasicOperationAction extends SuperAction implements
 	 */
 	public String register() {
 		String confirmpwd = request.getParameter("confirmpwd");
+		String registerCode = request.getParameter("registerCode");
 		if ("registerSuccess".equals(adminService.dealWithRegister(admin,
-				confirmpwd))) {
+				confirmpwd, registerCode))) {
 			session.setAttribute("info", "注册成功，请登录");
 			return "registerSuccess";
 		}
 
 		request.setAttribute("info",
-				adminService.dealWithRegister(admin, confirmpwd));
+				adminService.dealWithRegister(admin, confirmpwd, registerCode));
 		return "registerFailed";
 	}
 

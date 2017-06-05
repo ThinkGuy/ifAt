@@ -241,7 +241,6 @@ public class StudentBasicOperationAction extends SuperAction implements
 	 * @return
 	 */
 	public String countScore() {
-		System.out.println(session.getAttribute("studentName"));
 		if (session == null && httpSession != null) {
 			if (httpSession.getAttribute("studentName") == null) {
 				return "LoginNotYet";
@@ -264,7 +263,6 @@ public class StudentBasicOperationAction extends SuperAction implements
 		double accuracy = 0;
 		int times = 0;
 		int qscore = 0;
-		StringBuilder eachQuestionScore = new StringBuilder();
 
 		ArrayList<Question> questions = (ArrayList<Question>) session
 				.getAttribute("questions");
@@ -306,7 +304,7 @@ public class StudentBasicOperationAction extends SuperAction implements
 	}
 
 	/**
-	 *  
+	 *  中途退出保存。
 	 */
 	public void exitSave() {
 		if (session == null && httpSession != null) {

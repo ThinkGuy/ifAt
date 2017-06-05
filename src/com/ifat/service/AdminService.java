@@ -26,6 +26,7 @@ import com.sun.mail.handlers.image_gif;
  */
 public class AdminService {
 	
+	public static final String REGISTERCODE = "start";
 	private AdminDAO adminDAO;
 	private ClassDAO classDAO;
 	private StudentDAO studentDAO;
@@ -127,12 +128,14 @@ public class AdminService {
 	 * @param confirmpwd
 	 * @return
 	 */
-	public String dealWithRegister(Admin admin, String confirmpwd) {
+	public String dealWithRegister(Admin admin, String confirmpwd, String registerCode) {
 		if (!admin.getPassword().equals(confirmpwd)) {
 			return "两次密码输入不一致，请重新输入";
 		} else if (adminDAO.findByName(admin.getName()).size() != 0) {
 			return "用户名已存在,请重新输入用户名";
-		}  
+		} else if (!(registerCode.equals(REGISTERCODE) || adminDAO.findByName(registerCode).size() > 0)) {
+			return "注册码不存在，请向现有管理员寻要";
+		}
 
 		admin.setId(UUID.randomUUID().toString());
 		admin.setPassword(encryptByMd5AndRandomNum(confirmpwd));
