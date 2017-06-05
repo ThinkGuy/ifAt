@@ -208,7 +208,8 @@ public class StudentBasicOperationAction extends SuperAction implements
 		if (student.getEachquestionscore() != null
 				&& student.getEachquestionscore() != "") {
 			
-			if (!student.getEachquestionscore().contains("0")) {
+			if (student.getScore() != 0) {
+				session.setAttribute("questionList", questionList);
 				return countScore();
 			}
 			
@@ -380,7 +381,6 @@ public class StudentBasicOperationAction extends SuperAction implements
 			score = score + qscore;
 		}
 
-		student.setScore(score);
 		String eachScore = eachQuestionScore.toString().substring(0,
 				eachQuestionScore.length() - 1);
 		student.setEachquestionscore(eachScore);

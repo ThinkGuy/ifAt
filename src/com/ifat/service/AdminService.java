@@ -284,6 +284,7 @@ public class AdminService {
 		List<Student> students = studentDAO.findByCid(cid);
 		for (Student student : students) {
 			student.setEachquestionscore(null);
+			student.setScore(0);
 			studentDAO.merge(student);
 		}
 		
