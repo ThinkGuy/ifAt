@@ -38,6 +38,10 @@
 								<label for="Password">试卷名:</label> <input class="form-control"
 									id="name" type="text" name="name" />
 							</div>
+							<div class="form-group">
+								<label for="Password">试卷时间/(分钟):</label> <input class="form-control"
+									id="time" type="number" name="time" />
+							</div>
 							<!-- textarea -->
 							<div class="form-group">
 								<label>试卷Json</label>

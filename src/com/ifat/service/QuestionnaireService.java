@@ -62,6 +62,8 @@ public class QuestionnaireService {
 		if (isGoodJson(q) && q.indexOf(":") > 0) {
 			if (questionnaireDAO.findByName(questionnaire.getName()).size() > 0) {
 				return "试卷名已存在！请重输：";
+			} else if (questionnaire.getTime() > 120) {
+				return "试卷时间设置太长，应为0-120分钟";
 			}
 			questionnaire.setId(UUID.randomUUID().toString());
 			questionnaireDAO.save(questionnaire);
@@ -86,6 +88,8 @@ public class QuestionnaireService {
 			if (qList.size() > 0
 					&& !qList.get(0).getId().equals(questionnaire.getId())) {
 				return "试卷名已存在！请重输：";
+			} else if (questionnaire.getTime() > 120) {
+				return "试卷时间设置太长，应为0-120分钟";
 			}
 			questionnaireDAO.merge(questionnaire);
 			return "changeQuestionnaireSuccess";

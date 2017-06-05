@@ -21,7 +21,9 @@ import org.w3c.dom.ls.LSException;
 
 import com.ifat.config.GetHttpSessionConfigurator;
 import com.ifat.config.PassWordCreate;
+import com.ifat.model.ClassQuestionnaire;
 import com.ifat.model.Question;
+import com.ifat.model.Questionnaire;
 import com.ifat.model.Student;
 import com.ifat.service.StudentService;
 import com.opensymphony.xwork2.ModelDriven;
@@ -182,6 +184,9 @@ public class StudentBasicOperationAction extends SuperAction implements
 
 			String loginResult = displayQuestionnaire();
 			if ("OK".equals(loginResult)) {
+				ClassQuestionnaire classQuestionnaire = (ClassQuestionnaire) studentService.getClassQuestionnaireDAO().findByCid(student.getCid()).get(0);
+				Questionnaire questionnaire = studentService.getQuestionnaireDAO().findById(classQuestionnaire.getQid());
+				request.setAttribute("time", questionnaire.getTime());
 				return "studentLoginSuccess";
 			}
 

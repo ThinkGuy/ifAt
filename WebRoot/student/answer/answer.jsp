@@ -200,7 +200,7 @@
 		});
 		
 		function endTime(){
-		var times = 1000*60*30; //倒计时。
+		var times = 1000*60*${request.time}; //倒计时。
 		var endTimes=new Date();
    		endTimes.setTime(new Date().getTime() + times);//设置倒计时30分钟。
       	

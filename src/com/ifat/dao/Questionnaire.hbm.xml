@@ -16,5 +16,8 @@
         <property name="questionnaire" type="java.lang.String">
             <column name="questionnaire" length="65535" />
         </property>
+        <property name="time" type="java.lang.Integer">
+            <column name="time" />
+        </property>
     </class>
 </hibernate-mapping>

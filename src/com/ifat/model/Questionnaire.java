@@ -11,6 +11,7 @@ public class Questionnaire implements java.io.Serializable {
 	private String id;
 	private String name;
 	private String questionnaire;
+	private Integer time;
 
 	// Constructors
 
@@ -24,10 +25,12 @@ public class Questionnaire implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Questionnaire(String id, String name, String questionnaire) {
+	public Questionnaire(String id, String name, String questionnaire,
+			Integer time) {
 		this.id = id;
 		this.name = name;
 		this.questionnaire = questionnaire;
+		this.time = time;
 	}
 
 	// Property accessors
@@ -54,6 +57,14 @@ public class Questionnaire implements java.io.Serializable {
 
 	public void setQuestionnaire(String questionnaire) {
 		this.questionnaire = questionnaire;
+	}
+
+	public Integer getTime() {
+		return this.time;
+	}
+
+	public void setTime(Integer time) {
+		this.time = time;
 	}
 
 }
