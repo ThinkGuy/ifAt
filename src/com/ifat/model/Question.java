@@ -1,8 +1,9 @@
 package com.ifat.model;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Question {
+@SuppressWarnings("serial") 
+public class Question implements  Serializable{
 	
 	private String title;
 	private String a;
@@ -12,6 +13,7 @@ public class Question {
 	private String answer;
 	private Integer times = 0;
 	private Integer score = 0;
+	
 	public String getTitle() {
 		return title;
 	}
@@ -60,6 +62,8 @@ public class Question {
 	public void setScore(Integer score) {
 		this.score = score;
 	}
+	
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */

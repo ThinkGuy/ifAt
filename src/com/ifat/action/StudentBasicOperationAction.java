@@ -208,7 +208,6 @@ public class StudentBasicOperationAction extends SuperAction implements
 	public String displayQuestionnaire() {
 		student.setCid(session.getAttribute("studentId").toString());
 
-		Map<Integer, Integer> questionScoreMap = new TreeMap<Integer, Integer>();
 		ArrayList<Question> questionList = studentService
 				.dealWithDisplayQuestionnaire(student);
 		ArrayList<Question> questions = new ArrayList<Question>();
@@ -270,6 +269,7 @@ public class StudentBasicOperationAction extends SuperAction implements
 		int times = 0;
 		int qscore = 0;
 
+		@SuppressWarnings("unchecked")
 		ArrayList<Question> questions = (ArrayList<Question>) session
 				.getAttribute("questions");
 		Student student = studentService.getStudentDAO().findById(
@@ -324,6 +324,7 @@ public class StudentBasicOperationAction extends SuperAction implements
 		StringBuilder eachQuestionScore = new StringBuilder();
 
 		ArrayList<Question> questions = new ArrayList<Question>();
+		@SuppressWarnings("unchecked")
 		ArrayList<Question> questionList = (ArrayList<Question>) session
 				.getAttribute("questionList");
 		Student student = studentService.getStudentDAO().findById(
